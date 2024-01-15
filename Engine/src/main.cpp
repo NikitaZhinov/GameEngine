@@ -2,6 +2,7 @@
 
 int main() {
     GLFWwindow* window;
+    Engine::Window WindowSettings;
     scripts::MainScript Script;
 
     Script.Start();
@@ -11,7 +12,7 @@ int main() {
         return -1;
     }
 
-    window = glfwCreateWindow(Script.WIDTH_WINDOW, Script.HEIGHT_WINDOW, Script.TITLE_WINDOW.c_str(), NULL, NULL);
+    window = glfwCreateWindow(WindowSettings.get_size().x, WindowSettings.get_size().y, WindowSettings.get_title().c_str(), NULL, NULL);
     if (!window) {
         glfwTerminate();
         std::cout << "Can't created window!" << std::endl;
