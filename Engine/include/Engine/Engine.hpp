@@ -4,12 +4,15 @@
 #include <string>
 
 typedef struct {
-	int x;
-	int y;
+	int x, y;
 } Point2D;
+
+typedef struct {
+	int r, g, b;
+} Color;
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <Window/Window.hpp>
-#include <Scripts/MainScript.hpp>
+#include <MainScript.hpp>
