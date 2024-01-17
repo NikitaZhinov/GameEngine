@@ -10,10 +10,10 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
-file(GLOB scripts_src Scripts/src/*.cpp)
-file(GLOB engine_src Engine/src/*.cpp)
+file(GLOB SCRIPTS_SRC Scripts/src/*.cpp)
+file(GLOB ENGINE_SRC Engine/src/*.cpp)
 
-add_executable(GameEngine ${engine_src} ${scripts_src})
+add_executable(GameEngine ${ENGINE_SRC} ${SCRIPTS_SRC})
 
 target_include_directories(GameEngine PUBLIC Engine/include/)
 target_include_directories(GameEngine PUBLIC Scripts/include/)
