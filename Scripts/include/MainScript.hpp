@@ -2,8 +2,10 @@
 
 #include <Engine/Engine.hpp>
 
-class MainScript {
-public:
-	void Start();
-	void Update();
-};
+namespace scripts {
+	class MainScript {
+	public:
+		void Start();
+		void Update();
+	};
+}

@@ -12,21 +12,24 @@ void Window::set_background_color(int r, int g, int b) {
     background_color.r = r;
     background_color.g = g;
     background_color.b = b;
+    background_color.a = 0;
 }
 
-void Window::set_transparency(int a) { transparency = a; }
+void Window::set_background_color(int r, int g, int b, float a) {
+    background_color.r = r;
+    background_color.g = g;
+    background_color.b = b;
+    background_color.a = a;
+}
 
-Point2D Window::get_size() { return { width, height }; }
+Size Window::get_size() { return { width, height }; }
 
 std::string Window::get_title() { return title; }
 
 Color Window::get_background_color() { return background_color; }
 
-float Window::get_transparency() { return transparency; }
-
 // private
 int Window::width = 800;
 int Window::height = 600;
 std::string Window::title = "Hello, World!";
-Color Window::background_color = {0, 0, 0};
-float Window::transparency = 0.0;
+Color Window::background_color = { 0, 0, 0, 0 };
