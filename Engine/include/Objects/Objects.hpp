@@ -48,6 +48,23 @@ private:
 	Point vertices[3];
 };
 
+class Rectangle : public IObject {
+public:
+	Rectangle();
+	Rectangle(Size size);
+
+	void draw() override;
+	void set_size(Size size);
+
+	Point* get_vertices() override;
+	Color get_color() override;
+
+private:
+	Point vertices[4];
+
+	void set_vertices(Point vertices[4]) override;
+};
+
 class Square : public IObject {
 public:
 	Square();
