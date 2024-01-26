@@ -5,21 +5,21 @@
 #include <vector>
 
 struct Size {
-	int x, y;
+    int x, y;
 };
 
 struct Point {
-	float x, y, z;
+	  float x, y, z;
 };
 
 struct Color {
-	int r, g, b;
-	float a;
+    int r, g, b;
+    float a;
 };
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
-#include <Window/Window.hpp>
-#include <Objects/Objects.hpp>
 #include <MainScript.hpp>
+#include <Objects/Objects.hpp>
+#include <Window/Window.hpp>

@@ -3,7 +3,7 @@
 #include <Engine/Engine.hpp>
 
 class Window {
-public:
+   public:
     void set_size(int width, int height);
     void set_title(const char *title);
     void set_background_color(int r, int g, int b);
@@ -15,7 +15,7 @@ public:
     Color get_background_color();
     float get_transparency();
 
-private:
+   private:
     static int width;
     static int height;
     static std::string title;
