@@ -41,8 +41,8 @@
 //
 typedef struct _GLFWobjenumWin32
 {
-    IDirectInputDevice8W*   device;
-    _GLFWjoyobjectWin32*    objects;
+    IDirectInputDevice8W *  device;
+    _GLFWjoyobjectWin32 *   objects;
     int                     objectCount;
     int                     axisCount;
     int                     sliderCount;
@@ -146,7 +146,7 @@ static const DIDATAFORMAT _glfwDataFormat =
 
 // Returns a description fitting the specified XInput capabilities
 //
-static const char* getDeviceDescription(const XINPUT_CAPABILITIES* xic)
+static const char *getDeviceDescription(const XINPUT_CAPABILITIES *xic)
 {
     switch (xic->SubType)
     {
@@ -176,10 +176,10 @@ static const char* getDeviceDescription(const XINPUT_CAPABILITIES* xic)
 
 // Lexically compare device objects
 //
-static int compareJoystickObjects(const void* first, const void* second)
+static int compareJoystickObjects(const void *first, const void *second)
 {
-    const _GLFWjoyobjectWin32* fo = first;
-    const _GLFWjoyobjectWin32* so = second;
+    const _GLFWjoyobjectWin32 *fo = first;
+    const _GLFWjoyobjectWin32 *so = second;
 
     if (fo->type != so->type)
         return fo->type - so->type;
@@ -190,10 +190,10 @@ static int compareJoystickObjects(const void* first, const void* second)
 // Checks whether the specified device supports XInput
 // Technique from FDInputJoystickManager::IsXInputDeviceFast in ZDoom
 //
-static GLFWbool supportsXInput(const GUID* guid)
+static GLFWbool supportsXInput(const GUID *guid)
 {
     UINT i, count = 0;
-    RAWINPUTDEVICELIST* ridl;
+    RAWINPUTDEVICELIST *ridl;
     GLFWbool result = GLFW_FALSE;
 
     if (GetRawInputDeviceList(NULL, &count, sizeof(RAWINPUTDEVICELIST)) != 0)
@@ -254,7 +254,7 @@ static GLFWbool supportsXInput(const GUID* guid)
 
 // Frees all resources associated with the specified joystick
 //
-static void closeJoystick(_GLFWjoystick* js)
+static void closeJoystick(_GLFWjoystick *js)
 {
     _glfwInputJoystick(js, GLFW_DISCONNECTED);
 
@@ -271,11 +271,11 @@ static void closeJoystick(_GLFWjoystick* js)
 // DirectInput device object enumeration callback
 // Insights gleaned from SDL
 //
-static BOOL CALLBACK deviceObjectCallback(const DIDEVICEOBJECTINSTANCEW* doi,
-                                          void* user)
+static BOOL CALLBACK deviceObjectCallback(const DIDEVICEOBJECTINSTANCEW *doi,
+                                          void *user)
 {
-    _GLFWobjenumWin32* data = user;
-    _GLFWjoyobjectWin32* object = data->objects + data->objectCount;
+    _GLFWobjenumWin32 *data = user;
+    _GLFWjoyobjectWin32 *object = data->objects + data->objectCount;
 
     if (DIDFT_GETTYPE(doi->dwType) & DIDFT_AXIS)
     {
@@ -343,14 +343,14 @@ static BOOL CALLBACK deviceObjectCallback(const DIDEVICEOBJECTINSTANCEW* doi,
 
 // DirectInput device enumeration callback
 //
-static BOOL CALLBACK deviceCallback(const DIDEVICEINSTANCE* di, void* user)
+static BOOL CALLBACK deviceCallback(const DIDEVICEINSTANCE *di, void *user)
 {
     int jid = 0;
     DIDEVCAPS dc;
     DIPROPDWORD dipd;
-    IDirectInputDevice8* device;
+    IDirectInputDevice8 *device;
     _GLFWobjenumWin32 data;
-    _GLFWjoystick* js;
+    _GLFWjoystick *js;
     char guid[33];
     char name[256];
 
@@ -537,7 +537,7 @@ void _glfwDetectJoystickConnectionWin32(void)
             int jid;
             char guid[33];
             XINPUT_CAPABILITIES xic;
-            _GLFWjoystick* js;
+            _GLFWjoystick *js;
 
             for (jid = 0;  jid <= GLFW_JOYSTICK_LAST;  jid++)
             {
@@ -592,7 +592,7 @@ void _glfwDetectJoystickDisconnectionWin32(void)
 
     for (jid = 0;  jid <= GLFW_JOYSTICK_LAST;  jid++)
     {
-        _GLFWjoystick* js = _glfw.joysticks + jid;
+        _GLFWjoystick *js = _glfw.joysticks + jid;
         if (js->connected)
             _glfwPlatformPollJoystick(js, _GLFW_POLL_PRESENCE);
     }
@@ -603,7 +603,7 @@ void _glfwDetectJoystickDisconnectionWin32(void)
 //////                       GLFW platform API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
+int _glfwPlatformPollJoystick(_GLFWjoystick *js, int mode)
 {
     if (js->win32.device)
     {
@@ -635,7 +635,7 @@ int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
 
         for (i = 0;  i < js->win32.objectCount;  i++)
         {
-            const void* data = (char*) &state + js->win32.objects[i].offset;
+            const void *data = (char*) &state + js->win32.objects[i].offset;
 
             switch (js->win32.objects[i].type)
             {
@@ -672,7 +672,7 @@ int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
                     };
 
                     // Screams of horror are appropriate at this point
-                    int stateIndex = LOWORD(*(DWORD*) data) / (45 * DI_DEGREES);
+                    int stateIndex = LOWORD(*(DWORD*) data) / (45  *DI_DEGREES);
                     if (stateIndex < 0 || stateIndex > 8)
                         stateIndex = 8;
 
@@ -749,7 +749,7 @@ int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
     return GLFW_TRUE;
 }
 
-void _glfwPlatformUpdateGamepadGUID(char* guid)
+void _glfwPlatformUpdateGamepadGUID(char *guid)
 {
     if (strcmp(guid + 20, "504944564944") == 0)
     {

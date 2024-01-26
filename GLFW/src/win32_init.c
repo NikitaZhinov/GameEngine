@@ -114,7 +114,7 @@ static GLFWbool loadLibraries(void)
 
     {
         int i;
-        const char* names[] =
+        const char *names[] =
         {
             "xinput1_4.dll",
             "xinput1_3.dll",
@@ -389,9 +389,9 @@ static GLFWbool createHelperWindow(void)
 
 // Returns a wide string version of the specified UTF-8 string
 //
-WCHAR* _glfwCreateWideStringFromUTF8Win32(const char* source)
+WCHAR *_glfwCreateWideStringFromUTF8Win32(const char *source)
 {
-    WCHAR* target;
+    WCHAR *target;
     int count;
 
     count = MultiByteToWideChar(CP_UTF8, 0, source, -1, NULL, 0);
@@ -417,9 +417,9 @@ WCHAR* _glfwCreateWideStringFromUTF8Win32(const char* source)
 
 // Returns a UTF-8 string version of the specified wide string
 //
-char* _glfwCreateUTF8FromWideStringWin32(const WCHAR* source)
+char *_glfwCreateUTF8FromWideStringWin32(const WCHAR *source)
 {
-    char* target;
+    char *target;
     int size;
 
     size = WideCharToMultiByte(CP_UTF8, 0, source, -1, NULL, 0, NULL, NULL);
@@ -445,7 +445,7 @@ char* _glfwCreateUTF8FromWideStringWin32(const WCHAR* source)
 
 // Reports the specified error, appending information about the last Win32 error
 //
-void _glfwInputErrorWin32(int error, const char* description)
+void _glfwInputErrorWin32(int error, const char *description)
 {
     WCHAR buffer[_GLFW_MESSAGE_SIZE] = L"";
     char message[_GLFW_MESSAGE_SIZE] = "";
@@ -619,7 +619,7 @@ void _glfwPlatformTerminate(void)
     freeLibraries();
 }
 
-const char* _glfwPlatformGetVersionString(void)
+const char *_glfwPlatformGetVersionString(void)
 {
     return _GLFW_VERSION_NUMBER " Win32 WGL EGL OSMesa"
 #if defined(__MINGW32__)

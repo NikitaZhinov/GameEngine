@@ -31,39 +31,39 @@
 
 
 /*
- * Marcus: This code was originally written by Markus G. Kuhn.
- * I have made some slight changes (trimmed it down a bit from >60 KB to
- * 20 KB), but the functionality is the same.
+  *Marcus: This code was originally written by Markus G. Kuhn.
+  *I have made some slight changes (trimmed it down a bit from >60 KB to
+  *20 KB), but the functionality is the same.
  */
 
 /*
- * This module converts keysym values into the corresponding ISO 10646
- * (UCS, Unicode) values.
+  *This module converts keysym values into the corresponding ISO 10646
+  *(UCS, Unicode) values.
  *
- * The array keysymtab[] contains pairs of X11 keysym values for graphical
- * characters and the corresponding Unicode value. The function
- * _glfwKeySym2Unicode() maps a keysym onto a Unicode value using a binary
- * search, therefore keysymtab[] must remain SORTED by keysym value.
+  *The array keysymtab[] contains pairs of X11 keysym values for graphical
+  *characters and the corresponding Unicode value. The function
+  *_glfwKeySym2Unicode() maps a keysym onto a Unicode value using a binary
+  *search, therefore keysymtab[] must remain SORTED by keysym value.
  *
- * We allow to represent any UCS character in the range U-00000000 to
- * U-00FFFFFF by a keysym value in the range 0x01000000 to 0x01ffffff.
- * This admittedly does not cover the entire 31-bit space of UCS, but
- * it does cover all of the characters up to U-10FFFF, which can be
- * represented by UTF-16, and more, and it is very unlikely that higher
- * UCS codes will ever be assigned by ISO. So to get Unicode character
- * U+ABCD you can directly use keysym 0x0100abcd.
+  *We allow to represent any UCS character in the range U-00000000 to
+  *U-00FFFFFF by a keysym value in the range 0x01000000 to 0x01ffffff.
+  *This admittedly does not cover the entire 31-bit space of UCS, but
+  *it does cover all of the characters up to U-10FFFF, which can be
+  *represented by UTF-16, and more, and it is very unlikely that higher
+  *UCS codes will ever be assigned by ISO. So to get Unicode character
+  *U+ABCD you can directly use keysym 0x0100abcd.
  *
- * Original author: Markus G. Kuhn <mkuhn@acm.org>, University of
- *                  Cambridge, April 2001
+  *Original author: Markus G. Kuhn <mkuhn@acm.org>, University of
+  *                 Cambridge, April 2001
  *
- * Special thanks to Richard Verhoeven <river@win.tue.nl> for preparing
- * an initial draft of the mapping table.
+  *Special thanks to Richard Verhoeven <river@win.tue.nl> for preparing
+  *an initial draft of the mapping table.
  *
  */
 
 
 //************************************************************************
-//****                KeySym to Unicode mapping table                 ****
+//*** *               KeySym to Unicode mapping table                 ****
 //************************************************************************
 
 static const struct codepair {

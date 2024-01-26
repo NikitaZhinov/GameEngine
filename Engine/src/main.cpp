@@ -1,7 +1,7 @@
 #include <Engine/Engine.hpp>
 
 int main() {
-    GLFWwindow* window;
+    GLFWwindow *window;
     Window      WindowSettings;
     scripts::MainScript  Script;
 

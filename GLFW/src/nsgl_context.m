@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <math.h>
 
-static void makeContextCurrentNSGL(_GLFWwindow* window)
+static void makeContextCurrentNSGL(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -45,7 +45,7 @@ static void makeContextCurrentNSGL(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-static void swapBuffersNSGL(_GLFWwindow* window)
+static void swapBuffersNSGL(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -67,7 +67,7 @@ static void swapBuffersNSGL(_GLFWwindow* window)
             const double period = 1.0 / framerate;
             const double delay = period - fmod(elapsed, period);
 
-            usleep(floorl(delay * 1e6));
+            usleep(floorl(delay  *1e6));
         }
     }
 
@@ -80,7 +80,7 @@ static void swapIntervalNSGL(int interval)
 {
     @autoreleasepool {
 
-    _GLFWwindow* window = _glfwPlatformGetTls(&_glfw.contextSlot);
+    _GLFWwindow *window = _glfwPlatformGetTls(&_glfw.contextSlot);
     assert(window != NULL);
 
     [window->context.nsgl.object setValues:&interval
@@ -89,13 +89,13 @@ static void swapIntervalNSGL(int interval)
     } // autoreleasepool
 }
 
-static int extensionSupportedNSGL(const char* extension)
+static int extensionSupportedNSGL(const char *extension)
 {
     // There are no NSGL extensions
     return GLFW_FALSE;
 }
 
-static GLFWglproc getProcAddressNSGL(const char* procname)
+static GLFWglproc getProcAddressNSGL(const char *procname)
 {
     CFStringRef symbolName = CFStringCreateWithCString(kCFAllocatorDefault,
                                                        procname,
@@ -109,7 +109,7 @@ static GLFWglproc getProcAddressNSGL(const char* procname)
     return symbol;
 }
 
-static void destroyContextNSGL(_GLFWwindow* window)
+static void destroyContextNSGL(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -154,9 +154,9 @@ void _glfwTerminateNSGL(void)
 
 // Create the OpenGL context
 //
-GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
-                                const _GLFWctxconfig* ctxconfig,
-                                const _GLFWfbconfig* fbconfig)
+GLFWbool _glfwCreateContextNSGL(_GLFWwindow *window,
+                                const _GLFWctxconfig *ctxconfig,
+                                const _GLFWfbconfig *fbconfig)
 {
     if (ctxconfig->client == GLFW_OPENGL_ES_API)
     {
@@ -318,7 +318,7 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
         return GLFW_FALSE;
     }
 
-    NSOpenGLContext* share = nil;
+    NSOpenGLContext *share = nil;
 
     if (ctxconfig->share)
         share = ctxconfig->share->context.nsgl.object;
@@ -359,9 +359,9 @@ GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
 //////                        GLFW native API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI id glfwGetNSGLContext(GLFWwindow* handle)
+GLFWAPI id glfwGetNSGLContext(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(nil);
 
     if (window->context.source != GLFW_NATIVE_CONTEXT_API)

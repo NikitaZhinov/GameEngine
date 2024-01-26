@@ -68,23 +68,23 @@
 
 typedef XID GLXWindow;
 typedef XID GLXDrawable;
-typedef struct __GLXFBConfig* GLXFBConfig;
-typedef struct __GLXcontext* GLXContext;
+typedef struct __GLXFBConfig *GLXFBConfig;
+typedef struct __GLXcontext *GLXContext;
 typedef void (*__GLXextproc)(void);
 
 typedef int (*PFNGLXGETFBCONFIGATTRIBPROC)(Display*,GLXFBConfig,int,int*);
-typedef const char* (*PFNGLXGETCLIENTSTRINGPROC)(Display*,int);
+typedef const char *(*PFNGLXGETCLIENTSTRINGPROC)(Display*,int);
 typedef Bool (*PFNGLXQUERYEXTENSIONPROC)(Display*,int*,int*);
 typedef Bool (*PFNGLXQUERYVERSIONPROC)(Display*,int*,int*);
 typedef void (*PFNGLXDESTROYCONTEXTPROC)(Display*,GLXContext);
 typedef Bool (*PFNGLXMAKECURRENTPROC)(Display*,GLXDrawable,GLXContext);
 typedef void (*PFNGLXSWAPBUFFERSPROC)(Display*,GLXDrawable);
-typedef const char* (*PFNGLXQUERYEXTENSIONSSTRINGPROC)(Display*,int);
-typedef GLXFBConfig* (*PFNGLXGETFBCONFIGSPROC)(Display*,int,int*);
+typedef const char *(*PFNGLXQUERYEXTENSIONSSTRINGPROC)(Display*,int);
+typedef GLXFBConfig *(*PFNGLXGETFBCONFIGSPROC)(Display*,int,int*);
 typedef GLXContext (*PFNGLXCREATENEWCONTEXTPROC)(Display*,GLXFBConfig,int,GLXContext,Bool);
-typedef __GLXextproc (* PFNGLXGETPROCADDRESSPROC)(const GLubyte *procName);
+typedef __GLXextproc ( *PFNGLXGETPROCADDRESSPROC)(const GLubyte *procName);
 typedef void (*PFNGLXSWAPINTERVALEXTPROC)(Display*,GLXDrawable,int);
-typedef XVisualInfo* (*PFNGLXGETVISUALFROMFBCONFIGPROC)(Display*,GLXFBConfig);
+typedef XVisualInfo *(*PFNGLXGETVISUALFROMFBCONFIGPROC)(Display*,GLXFBConfig);
 typedef GLXWindow (*PFNGLXCREATEWINDOWPROC)(Display*,GLXFBConfig,Window,const int*);
 typedef void (*PFNGLXDESTROYWINDOWPROC)(Display*,GLXWindow);
 
@@ -127,7 +127,7 @@ typedef struct _GLFWlibraryGLX
     int             eventBase;
     int             errorBase;
 
-    void*           handle;
+    void *          handle;
 
     // GLX 1.3 functions
     PFNGLXGETFBCONFIGSPROC              GetFBConfigs;
@@ -167,12 +167,12 @@ typedef struct _GLFWlibraryGLX
 
 GLFWbool _glfwInitGLX(void);
 void _glfwTerminateGLX(void);
-GLFWbool _glfwCreateContextGLX(_GLFWwindow* window,
-                               const _GLFWctxconfig* ctxconfig,
-                               const _GLFWfbconfig* fbconfig);
-void _glfwDestroyContextGLX(_GLFWwindow* window);
-GLFWbool _glfwChooseVisualGLX(const _GLFWwndconfig* wndconfig,
-                              const _GLFWctxconfig* ctxconfig,
-                              const _GLFWfbconfig* fbconfig,
-                              Visual** visual, int* depth);
+GLFWbool _glfwCreateContextGLX(_GLFWwindow *window,
+                               const _GLFWctxconfig *ctxconfig,
+                               const _GLFWfbconfig *fbconfig);
+void _glfwDestroyContextGLX(_GLFWwindow *window);
+GLFWbool _glfwChooseVisualGLX(const _GLFWwndconfig *wndconfig,
+                              const _GLFWctxconfig *ctxconfig,
+                              const _GLFWfbconfig *fbconfig,
+                              Visual* *visual, int *depth);
 

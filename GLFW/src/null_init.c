@@ -45,7 +45,7 @@ void _glfwPlatformTerminate(void)
     _glfwTerminateOSMesa();
 }
 
-const char* _glfwPlatformGetVersionString(void)
+const char *_glfwPlatformGetVersionString(void)
 {
     return _GLFW_VERSION_NUMBER " null OSMesa";
 }

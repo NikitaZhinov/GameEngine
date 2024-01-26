@@ -69,14 +69,14 @@ uint64_t _glfwPlatformGetTimerValue(void)
     {
         struct timespec ts;
         clock_gettime(CLOCK_MONOTONIC, &ts);
-        return (uint64_t) ts.tv_sec * (uint64_t) 1000000000 + (uint64_t) ts.tv_nsec;
+        return (uint64_t) ts.tv_sec  *(uint64_t) 1000000000 + (uint64_t) ts.tv_nsec;
     }
     else
 #endif
     {
         struct timeval tv;
         gettimeofday(&tv, NULL);
-        return (uint64_t) tv.tv_sec * (uint64_t) 1000000 + (uint64_t) tv.tv_usec;
+        return (uint64_t) tv.tv_sec  *(uint64_t) 1000000 + (uint64_t) tv.tv_usec;
     }
 }
 

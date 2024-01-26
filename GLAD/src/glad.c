@@ -24,7 +24,7 @@
 #include <string.h>
 #include <glad/glad.h>
 
-static void* get_proc(const char *namez);
+static void *get_proc(const char *namez);
 
 #if defined(_WIN32) || defined(__CYGWIN__)
 #ifndef _WINDOWS_
@@ -33,7 +33,7 @@ static void* get_proc(const char *namez);
 #include <windows.h>
 static HMODULE libGL;
 
-typedef void* (APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
+typedef void *(APIENTRYP PFNWGLGETPROCADDRESSPROC_PRIVATE)(const char*);
 static PFNWGLGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 
 #ifdef _MSC_VER
@@ -58,7 +58,7 @@ int open_gl(void) {
 #ifndef IS_UWP
     libGL = LoadLibraryW(L"opengl32.dll");
     if(libGL != NULL) {
-        void (* tmp)(void);
+        void ( *tmp)(void);
         tmp = (void(*)(void)) GetProcAddress(libGL, "wglGetProcAddress");
         gladGetProcAddressPtr = (PFNWGLGETPROCADDRESSPROC_PRIVATE) tmp;
         return gladGetProcAddressPtr != NULL;
@@ -77,10 +77,10 @@ void close_gl(void) {
 }
 #else
 #include <dlfcn.h>
-static void* libGL;
+static void *libGL;
 
 #if !defined(__APPLE__) && !defined(__HAIKU__)
-typedef void* (APIENTRYP PFNGLXGETPROCADDRESSPROC_PRIVATE)(const char*);
+typedef void *(APIENTRYP PFNGLXGETPROCADDRESSPROC_PRIVATE)(const char*);
 static PFNGLXGETPROCADDRESSPROC_PRIVATE gladGetProcAddressPtr;
 #endif
 
@@ -125,8 +125,8 @@ void close_gl(void) {
 #endif
 
 static
-void* get_proc(const char *namez) {
-    void* result = NULL;
+void *get_proc(const char *namez) {
+    void *result = NULL;
     if(libGL == NULL) return NULL;
 
 #if !defined(__APPLE__) && !defined(__HAIKU__)
@@ -181,7 +181,7 @@ static int get_exts(void) {
         num_exts_i = 0;
         glGetIntegerv(GL_NUM_EXTENSIONS, &num_exts_i);
         if (num_exts_i > 0) {
-            exts_i = (char **)malloc((size_t)num_exts_i * (sizeof *exts_i));
+            exts_i = (char **)malloc((size_t)num_exts_i  *(sizeof *exts_i));
         }
 
         if (exts_i == NULL) {
@@ -192,9 +192,9 @@ static int get_exts(void) {
             const char *gl_str_tmp = (const char*)glGetStringi(GL_EXTENSIONS, index);
             size_t len = strlen(gl_str_tmp);
 
-            char *local_str = (char*)malloc((len+1) * sizeof(char));
+            char *local_str = (char*)malloc((len+1)  *sizeof(char));
             if(local_str != NULL) {
-                memcpy(local_str, gl_str_tmp, (len+1) * sizeof(char));
+                memcpy(local_str, gl_str_tmp, (len+1)  *sizeof(char));
             }
             exts_i[index] = local_str;
         }
@@ -2441,14 +2441,14 @@ static int find_extensionsGL(void) {
 
 static void find_coreGL(void) {
 
-    /* Thank you @elmindreda
-     * https://github.com/elmindreda/greg/blob/master/templates/greg.c.in#L176
-     * https://github.com/glfw/glfw/blob/master/src/context.c#L36
+    / *Thank you @elmindreda
+      *https://github.com/elmindreda/greg/blob/master/templates/greg.c.in#L176
+      *https://github.com/glfw/glfw/blob/master/src/context.c#L36
      */
     int i, major, minor;
 
-    const char* version;
-    const char* prefixes[] = {
+    const char *version;
+    const char *prefixes[] = {
         "OpenGL ES-CM ",
         "OpenGL ES-CL ",
         "OpenGL ES ",
@@ -2466,7 +2466,7 @@ static void find_coreGL(void) {
         }
     }
 
-/* PR #18 */
+/ *PR #18 */
 #ifdef _MSC_VER
     sscanf_s(version, "%d.%d", &major, &minor);
 #else

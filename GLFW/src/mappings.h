@@ -58,7 +58,7 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 
-const char* _glfwDefaultMappings[] =
+const char *_glfwDefaultMappings[] =
 {
 #if defined(GLFW_BUILD_WIN32_MAPPINGS)
 "03000000fa2d00000100000000000000,3DRUDDER,leftx:a0,lefty:a1,rightx:a5,righty:a2,platform:Windows,",

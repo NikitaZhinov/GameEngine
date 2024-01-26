@@ -42,9 +42,9 @@ typedef struct _GLFWjoyobjectWin32
 //
 typedef struct _GLFWjoystickWin32
 {
-    _GLFWjoyobjectWin32*    objects;
+    _GLFWjoyobjectWin32 *   objects;
     int                     objectCount;
-    IDirectInputDevice8W*   device;
+    IDirectInputDevice8W *  device;
     DWORD                   index;
     GUID                    guid;
 } _GLFWjoystickWin32;

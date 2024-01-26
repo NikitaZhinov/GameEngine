@@ -76,7 +76,7 @@ static void terminate(void)
 
     for (i = 0;  i < _glfw.monitorCount;  i++)
     {
-        _GLFWmonitor* monitor = _glfw.monitors[i];
+        _GLFWmonitor *monitor = _glfw.monitors[i];
         if (monitor->originalRamp.size)
             _glfwPlatformSetGammaRamp(monitor, &monitor->originalRamp);
         _glfwFreeMonitor(monitor);
@@ -97,7 +97,7 @@ static void terminate(void)
 
     while (_glfw.errorListHead)
     {
-        _GLFWerror* error = _glfw.errorListHead;
+        _GLFWerror *error = _glfw.errorListHead;
         _glfw.errorListHead = error->next;
         free(error);
     }
@@ -117,7 +117,7 @@ static void terminate(void)
 // Encode a Unicode code point to a UTF-8 stream
 // Based on cutef8 by Jeff Bezanson (Public Domain)
 //
-size_t _glfwEncodeUTF8(char* s, uint32_t codepoint)
+size_t _glfwEncodeUTF8(char *s, uint32_t codepoint)
 {
     size_t count = 0;
 
@@ -148,17 +148,17 @@ size_t _glfwEncodeUTF8(char* s, uint32_t codepoint)
 // Splits and translates a text/uri-list into separate file paths
 // NOTE: This function destroys the provided string
 //
-char** _glfwParseUriList(char* text, int* count)
+char* *_glfwParseUriList(char *text, int *count)
 {
-    const char* prefix = "file://";
-    char** paths = NULL;
-    char* line;
+    const char *prefix = "file://";
+    char* *paths = NULL;
+    char *line;
 
     *count = 0;
 
     while ((line = strtok(text, "\r\n")))
     {
-        char* path;
+        char *path;
 
         text = NULL;
 
@@ -176,7 +176,7 @@ char** _glfwParseUriList(char* text, int* count)
         (*count)++;
 
         path = calloc(strlen(line) + 1, 1);
-        paths = realloc(paths, *count * sizeof(char*));
+        paths = realloc(paths, *count  *sizeof(char*));
         paths[*count - 1] = path;
 
         while (*line)
@@ -198,10 +198,10 @@ char** _glfwParseUriList(char* text, int* count)
     return paths;
 }
 
-char* _glfw_strdup(const char* source)
+char *_glfw_strdup(const char *source)
 {
     const size_t length = strlen(source);
-    char* result = calloc(length + 1, 1);
+    char *result = calloc(length + 1, 1);
     strcpy(result, source);
     return result;
 }
@@ -247,9 +247,9 @@ float _glfw_fmaxf(float a, float b)
 
 // Notifies shared code of an error
 //
-void _glfwInputError(int code, const char* format, ...)
+void _glfwInputError(int code, const char *format, ...)
 {
-    _GLFWerror* error;
+    _GLFWerror *error;
     char description[_GLFW_MESSAGE_SIZE];
 
     if (format)
@@ -379,7 +379,7 @@ GLFWAPI void glfwInitHint(int hint, int value)
                     "Invalid init hint 0x%08X", hint);
 }
 
-GLFWAPI void glfwGetVersion(int* major, int* minor, int* rev)
+GLFWAPI void glfwGetVersion(int *major, int *minor, int *rev)
 {
     if (major != NULL)
         *major = GLFW_VERSION_MAJOR;
@@ -389,14 +389,14 @@ GLFWAPI void glfwGetVersion(int* major, int* minor, int* rev)
         *rev = GLFW_VERSION_REVISION;
 }
 
-GLFWAPI const char* glfwGetVersionString(void)
+GLFWAPI const char *glfwGetVersionString(void)
 {
     return _glfwPlatformGetVersionString();
 }
 
-GLFWAPI int glfwGetError(const char** description)
+GLFWAPI int glfwGetError(const char* *description)
 {
-    _GLFWerror* error;
+    _GLFWerror *error;
     int code = GLFW_NO_ERROR;
 
     if (description)

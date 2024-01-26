@@ -76,9 +76,9 @@ static void changeToResourcesDirectory(void)
 static void createMenuBar(void)
 {
     size_t i;
-    NSString* appName = nil;
-    NSDictionary* bundleInfo = [[NSBundle mainBundle] infoDictionary];
-    NSString* nameKeys[] =
+    NSString *appName = nil;
+    NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
+    NSString *nameKeys[] =
     {
         @"CFBundleDisplayName",
         @"CFBundleName",
@@ -101,26 +101,26 @@ static void createMenuBar(void)
 
     if (!appName)
     {
-        char** progname = _NSGetProgname();
+        char* *progname = _NSGetProgname();
         if (progname && *progname)
             appName = @(*progname);
         else
             appName = @"GLFW Application";
     }
 
-    NSMenu* bar = [[NSMenu alloc] init];
+    NSMenu *bar = [[NSMenu alloc] init];
     [NSApp setMainMenu:bar];
 
-    NSMenuItem* appMenuItem =
+    NSMenuItem *appMenuItem =
         [bar addItemWithTitle:@"" action:NULL keyEquivalent:@""];
-    NSMenu* appMenu = [[NSMenu alloc] init];
+    NSMenu *appMenu = [[NSMenu alloc] init];
     [appMenuItem setSubmenu:appMenu];
 
     [appMenu addItemWithTitle:[NSString stringWithFormat:@"About %@", appName]
                        action:@selector(orderFrontStandardAboutPanel:)
                 keyEquivalent:@""];
     [appMenu addItem:[NSMenuItem separatorItem]];
-    NSMenu* servicesMenu = [[NSMenu alloc] init];
+    NSMenu *servicesMenu = [[NSMenu alloc] init];
     [NSApp setServicesMenu:servicesMenu];
     [[appMenu addItemWithTitle:@"Services"
                        action:NULL
@@ -142,10 +142,10 @@ static void createMenuBar(void)
                        action:@selector(terminate:)
                 keyEquivalent:@"q"];
 
-    NSMenuItem* windowMenuItem =
+    NSMenuItem *windowMenuItem =
         [bar addItemWithTitle:@"" action:NULL keyEquivalent:@""];
     [bar release];
-    NSMenu* windowMenu = [[NSMenu alloc] initWithTitle:@"Window"];
+    NSMenu *windowMenu = [[NSMenu alloc] initWithTitle:@"Window"];
     [NSApp setWindowsMenu:windowMenu];
     [windowMenuItem setSubmenu:windowMenu];
 
@@ -351,7 +351,7 @@ static GLFWbool initializeTIS(void)
         return GLFW_FALSE;
     }
 
-    CFStringRef* kPropertyUnicodeKeyLayoutData =
+    CFStringRef *kPropertyUnicodeKeyLayoutData =
         CFBundleGetDataPointerForName(_glfw.ns.tis.bundle,
                                       CFSTR("kTISPropertyUnicodeKeyLayoutData"));
     _glfw.ns.tis.CopyCurrentKeyboardLayoutInputSource =
@@ -385,7 +385,7 @@ static GLFWbool initializeTIS(void)
 
 @implementation GLFWHelper
 
-- (void)selectedKeyboardInputSourceChanged:(NSObject* )object
+- (void)selectedKeyboardInputSourceChanged:(NSObject *)object
 {
     updateUnicodeDataNS();
 }
@@ -403,7 +403,7 @@ static GLFWbool initializeTIS(void)
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
 
     for (window = _glfw.windowListHead;  window;  window = window->next)
         _glfwInputWindowCloseRequest(window);
@@ -413,7 +413,7 @@ static GLFWbool initializeTIS(void)
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *) notification
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
 
     for (window = _glfw.windowListHead;  window;  window = window->next)
     {
@@ -469,7 +469,7 @@ static GLFWbool initializeTIS(void)
 //////                       GLFW internal API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-void* _glfwLoadLocalVulkanLoaderNS(void)
+void *_glfwLoadLocalVulkanLoaderNS(void)
 {
     CFBundleRef bundle = CFBundleGetMainBundle();
     if (!bundle)
@@ -488,7 +488,7 @@ void* _glfwLoadLocalVulkanLoaderNS(void)
     }
 
     char path[PATH_MAX];
-    void* handle = NULL;
+    void *handle = NULL;
 
     if (CFURLGetFileSystemRepresentation(loaderUrl, true, (UInt8*) path, sizeof(path) - 1))
         handle = _glfw_dlopen(path);
@@ -528,7 +528,7 @@ int _glfwPlatformInit(void)
 
     [NSApp setDelegate:_glfw.ns.delegate];
 
-    NSEvent* (^block)(NSEvent*) = ^ NSEvent* (NSEvent* event)
+    NSEvent *(^block)(NSEvent*) = ^ NSEvent *(NSEvent *event)
     {
         if ([event modifierFlags] & NSEventModifierFlagCommand)
             [[NSApp keyWindow] sendEvent:event];
@@ -544,7 +544,7 @@ int _glfwPlatformInit(void)
         changeToResourcesDirectory();
 
     // Press and Hold prevents some keys from emitting repeated characters
-    NSDictionary* defaults = @{@"ApplePressAndHoldEnabled":@NO};
+    NSDictionary *defaults = @{@"ApplePressAndHoldEnabled":@NO};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 
     [[NSNotificationCenter defaultCenter]
@@ -622,7 +622,7 @@ void _glfwPlatformTerminate(void)
     } // autoreleasepool
 }
 
-const char* _glfwPlatformGetVersionString(void)
+const char *_glfwPlatformGetVersionString(void)
 {
     return _GLFW_VERSION_NUMBER " Cocoa NSGL EGL OSMesa"
 #if defined(_GLFW_BUILD_DLL)

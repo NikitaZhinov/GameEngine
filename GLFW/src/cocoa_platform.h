@@ -38,7 +38,7 @@
 #if defined(__OBJC__)
 #import <Cocoa/Cocoa.h>
 #else
-typedef void* id;
+typedef void *id;
 #endif
 
 // NOTE: Many Cocoa enum values have been renamed and we need to build across
@@ -79,17 +79,17 @@ typedef VkFlags VkMetalSurfaceCreateFlagsEXT;
 typedef struct VkMacOSSurfaceCreateInfoMVK
 {
     VkStructureType                 sType;
-    const void*                     pNext;
+    const void *                    pNext;
     VkMacOSSurfaceCreateFlagsMVK    flags;
-    const void*                     pView;
+    const void *                    pView;
 } VkMacOSSurfaceCreateInfoMVK;
 
 typedef struct VkMetalSurfaceCreateInfoEXT
 {
     VkStructureType                 sType;
-    const void*                     pNext;
+    const void *                    pNext;
     VkMetalSurfaceCreateFlagsEXT    flags;
-    const void*                     pLayer;
+    const void *                    pLayer;
 } VkMetalSurfaceCreateInfoEXT;
 
 typedef VkResult (APIENTRY *PFN_vkCreateMacOSSurfaceMVK)(VkInstance,const VkMacOSSurfaceCreateInfoMVK*,const VkAllocationCallbacks*,VkSurfaceKHR*);
@@ -118,7 +118,7 @@ typedef VkResult (APIENTRY *PFN_vkCreateMetalSurfaceEXT)(VkInstance,const VkMeta
 #define kTISPropertyUnicodeKeyLayoutData _glfw.ns.tis.kPropertyUnicodeKeyLayoutData
 typedef TISInputSourceRef (*PFN_TISCopyCurrentKeyboardLayoutInputSource)(void);
 #define TISCopyCurrentKeyboardLayoutInputSource _glfw.ns.tis.CopyCurrentKeyboardLayoutInputSource
-typedef void* (*PFN_TISGetInputSourceProperty)(TISInputSourceRef,CFStringRef);
+typedef void *(*PFN_TISGetInputSourceProperty)(TISInputSourceRef,CFStringRef);
 #define TISGetInputSourceProperty _glfw.ns.tis.GetInputSourceProperty
 typedef UInt8 (*PFN_LMGetKbdType)(void);
 #define LMGetKbdType _glfw.ns.tis.GetKbdType
@@ -166,12 +166,12 @@ typedef struct _GLFWlibraryNS
     char                keynames[GLFW_KEY_LAST + 1][17];
     short int           keycodes[256];
     short int           scancodes[GLFW_KEY_LAST + 1];
-    char*               clipboardString;
+    char *              clipboardString;
     CGPoint             cascadePoint;
     // Where to place the cursor when re-enabled
     double              restoreCursorPosX, restoreCursorPosY;
     // The window whose disabled cursor mode is active
-    _GLFWwindow*        disabledCursorWindow;
+    _GLFWwindow *       disabledCursorWindow;
 
     struct {
         CFBundleRef     bundle;
@@ -211,10 +211,10 @@ typedef struct _GLFWtimerNS
 void _glfwInitTimerNS(void);
 
 void _glfwPollMonitorsNS(void);
-void _glfwSetVideoModeNS(_GLFWmonitor* monitor, const GLFWvidmode* desired);
-void _glfwRestoreVideoModeNS(_GLFWmonitor* monitor);
+void _glfwSetVideoModeNS(_GLFWmonitor *monitor, const GLFWvidmode *desired);
+void _glfwRestoreVideoModeNS(_GLFWmonitor *monitor);
 
 float _glfwTransformYNS(float y);
 
-void* _glfwLoadLocalVulkanLoaderNS(void);
+void *_glfwLoadLocalVulkanLoaderNS(void);
 

@@ -46,7 +46,7 @@
 // exists and whether all relevant options have supported and non-conflicting
 // values
 //
-GLFWbool _glfwIsValidContextConfig(const _GLFWctxconfig* ctxconfig)
+GLFWbool _glfwIsValidContextConfig(const _GLFWctxconfig *ctxconfig)
 {
     if (ctxconfig->source != GLFW_NATIVE_CONTEXT_API &&
         ctxconfig->source != GLFW_EGL_CONTEXT_API &&
@@ -182,16 +182,16 @@ GLFWbool _glfwIsValidContextConfig(const _GLFWctxconfig* ctxconfig)
 
 // Chooses the framebuffer config that best matches the desired one
 //
-const _GLFWfbconfig* _glfwChooseFBConfig(const _GLFWfbconfig* desired,
-                                         const _GLFWfbconfig* alternatives,
+const _GLFWfbconfig *_glfwChooseFBConfig(const _GLFWfbconfig *desired,
+                                         const _GLFWfbconfig *alternatives,
                                          unsigned int count)
 {
     unsigned int i;
     unsigned int missing, leastMissing = UINT_MAX;
     unsigned int colorDiff, leastColorDiff = UINT_MAX;
     unsigned int extraDiff, leastExtraDiff = UINT_MAX;
-    const _GLFWfbconfig* current;
-    const _GLFWfbconfig* closest = NULL;
+    const _GLFWfbconfig *current;
+    const _GLFWfbconfig *closest = NULL;
 
     for (i = 0;  i < count;  i++)
     {
@@ -344,13 +344,13 @@ const _GLFWfbconfig* _glfwChooseFBConfig(const _GLFWfbconfig* desired,
 
 // Retrieves the attributes of the current context
 //
-GLFWbool _glfwRefreshContextAttribs(_GLFWwindow* window,
-                                    const _GLFWctxconfig* ctxconfig)
+GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
+                                    const _GLFWctxconfig *ctxconfig)
 {
     int i;
-    _GLFWwindow* previous;
-    const char* version;
-    const char* prefixes[] =
+    _GLFWwindow *previous;
+    const char *version;
+    const char *prefixes[] =
     {
         "OpenGL ES-CM ",
         "OpenGL ES-CL ",
@@ -584,14 +584,14 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow* window,
 
 // Searches an extension string for the specified extension
 //
-GLFWbool _glfwStringInExtensionString(const char* string, const char* extensions)
+GLFWbool _glfwStringInExtensionString(const char *string, const char *extensions)
 {
-    const char* start = extensions;
+    const char *start = extensions;
 
     for (;;)
     {
-        const char* where;
-        const char* terminator;
+        const char *where;
+        const char *terminator;
 
         where = strstr(start, string);
         if (!where)
@@ -615,10 +615,10 @@ GLFWbool _glfwStringInExtensionString(const char* string, const char* extensions
 //////                        GLFW public API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI void glfwMakeContextCurrent(GLFWwindow* handle)
+GLFWAPI void glfwMakeContextCurrent(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
-    _GLFWwindow* previous;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
+    _GLFWwindow *previous;
 
     _GLFW_REQUIRE_INIT();
 
@@ -641,15 +641,15 @@ GLFWAPI void glfwMakeContextCurrent(GLFWwindow* handle)
         window->context.makeCurrent(window);
 }
 
-GLFWAPI GLFWwindow* glfwGetCurrentContext(void)
+GLFWAPI GLFWwindow *glfwGetCurrentContext(void)
 {
     _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
     return _glfwPlatformGetTls(&_glfw.contextSlot);
 }
 
-GLFWAPI void glfwSwapBuffers(GLFWwindow* handle)
+GLFWAPI void glfwSwapBuffers(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     assert(window != NULL);
 
     _GLFW_REQUIRE_INIT();
@@ -666,7 +666,7 @@ GLFWAPI void glfwSwapBuffers(GLFWwindow* handle)
 
 GLFWAPI void glfwSwapInterval(int interval)
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
 
     _GLFW_REQUIRE_INIT();
 
@@ -681,9 +681,9 @@ GLFWAPI void glfwSwapInterval(int interval)
     window->context.swapInterval(interval);
 }
 
-GLFWAPI int glfwExtensionSupported(const char* extension)
+GLFWAPI int glfwExtensionSupported(const char *extension)
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
     assert(extension != NULL);
 
     _GLFW_REQUIRE_INIT_OR_RETURN(GLFW_FALSE);
@@ -713,7 +713,7 @@ GLFWAPI int glfwExtensionSupported(const char* extension)
 
         for (i = 0;  i < count;  i++)
         {
-            const char* en = (const char*)
+            const char *en = (const char*)
                 window->context.GetStringi(GL_EXTENSIONS, i);
             if (!en)
             {
@@ -730,7 +730,7 @@ GLFWAPI int glfwExtensionSupported(const char* extension)
     {
         // Check if extension is in the old style OpenGL extensions string
 
-        const char* extensions = (const char*)
+        const char *extensions = (const char*)
             window->context.GetString(GL_EXTENSIONS);
         if (!extensions)
         {
@@ -747,9 +747,9 @@ GLFWAPI int glfwExtensionSupported(const char* extension)
     return window->context.extensionSupported(extension);
 }
 
-GLFWAPI GLFWglproc glfwGetProcAddress(const char* procname)
+GLFWAPI GLFWglproc glfwGetProcAddress(const char *procname)
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
     assert(procname != NULL);
 
     _GLFW_REQUIRE_INIT_OR_RETURN(NULL);

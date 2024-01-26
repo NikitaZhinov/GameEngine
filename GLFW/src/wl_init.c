@@ -42,8 +42,8 @@
 #include <wayland-client.h>
 #include <assert.h>
 
-static void wmBaseHandlePing(void* userData,
-                             struct xdg_wm_base* wmBase,
+static void wmBaseHandlePing(void *userData,
+                             struct xdg_wm_base *wmBase,
                              uint32_t serial)
 {
     xdg_wm_base_pong(wmBase, serial);
@@ -54,10 +54,10 @@ static const struct xdg_wm_base_listener wmBaseListener =
     wmBaseHandlePing
 };
 
-static void registryHandleGlobal(void* userData,
-                                 struct wl_registry* registry,
+static void registryHandleGlobal(void *userData,
+                                 struct wl_registry *registry,
                                  uint32_t name,
-                                 const char* interface,
+                                 const char *interface,
                                  uint32_t version)
 {
     if (strcmp(interface, "wl_compositor") == 0)
@@ -140,15 +140,15 @@ static void registryHandleGlobal(void* userData,
     }
 }
 
-static void registryHandleGlobalRemove(void* userData,
-                                       struct wl_registry* registry,
+static void registryHandleGlobalRemove(void *userData,
+                                       struct wl_registry *registry,
                                        uint32_t name)
 {
     int i;
 
     for (i = 0; i < _glfw.monitorCount; ++i)
     {
-        _GLFWmonitor* monitor = _glfw.monitors[i];
+        _GLFWmonitor *monitor = _glfw.monitors[i];
         if (monitor->wl.name == name)
         {
             _glfwInputMonitor(monitor, GLFW_DISCONNECTED, 0);
@@ -164,9 +164,9 @@ static const struct wl_registry_listener registryListener =
     registryHandleGlobalRemove
 };
 
-void libdecorHandleError(struct libdecor* context,
+void libdecorHandleError(struct libdecor *context,
                          enum libdecor_error error,
-                         const char* message)
+                         const char *message)
 {
     _glfwInputError(GLFW_PLATFORM_ERROR,
                     "Wayland: libdecor error %u: %s",
@@ -178,8 +178,8 @@ static const struct libdecor_interface libdecorInterface =
     libdecorHandleError
 };
 
-static void libdecorReadyCallback(void* userData,
-                                  struct wl_callback* callback,
+static void libdecorReadyCallback(void *userData,
+                                  struct wl_callback *callback,
                                   uint32_t time)
 {
     _glfw.wl.libdecor.ready = GLFW_TRUE;
@@ -333,7 +333,7 @@ static GLFWbool loadCursorTheme(void)
 {
     int cursorSize = 16;
 
-    const char* sizeString = getenv("XCURSOR_SIZE");
+    const char *sizeString = getenv("XCURSOR_SIZE");
     if (sizeString)
     {
         errno = 0;
@@ -342,7 +342,7 @@ static GLFWbool loadCursorTheme(void)
             cursorSize = (int) cursorSizeLong;
     }
 
-    const char* themeName = getenv("XCURSOR_THEME");
+    const char *themeName = getenv("XCURSOR_THEME");
 
     _glfw.wl.cursorTheme = wl_cursor_theme_load(themeName, cursorSize, _glfw.wl.shm);
     if (!_glfw.wl.cursorTheme)
@@ -354,7 +354,7 @@ static GLFWbool loadCursorTheme(void)
 
     // If this happens to be NULL, we just fallback to the scale=1 version.
     _glfw.wl.cursorThemeHiDPI =
-        wl_cursor_theme_load(themeName, cursorSize * 2, _glfw.wl.shm);
+        wl_cursor_theme_load(themeName, cursorSize  *2, _glfw.wl.shm);
 
     _glfw.wl.cursorSurface = wl_compositor_create_surface(_glfw.wl.compositor);
     _glfw.wl.cursorTimerfd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
@@ -735,7 +735,7 @@ void _glfwPlatformTerminate(void)
     free(_glfw.wl.clipboardString);
 }
 
-const char* _glfwPlatformGetVersionString(void)
+const char *_glfwPlatformGetVersionString(void)
 {
     return _GLFW_VERSION_NUMBER " Wayland EGL OSMesa"
 #if defined(_POSIX_TIMERS) && defined(_POSIX_MONOTONIC_CLOCK)

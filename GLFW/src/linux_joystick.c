@@ -47,7 +47,7 @@
 
 // Apply an EV_KEY event to the specified joystick
 //
-static void handleKeyEvent(_GLFWjoystick* js, int code, int value)
+static void handleKeyEvent(_GLFWjoystick *js, int code, int value)
 {
     _glfwInputJoystickButton(js,
                              js->linjs.keyMap[code - BTN_MISC],
@@ -56,7 +56,7 @@ static void handleKeyEvent(_GLFWjoystick* js, int code, int value)
 
 // Apply an EV_ABS event to the specified joystick
 //
-static void handleAbsEvent(_GLFWjoystick* js, int code, int value)
+static void handleAbsEvent(_GLFWjoystick *js, int code, int value)
 {
     const int index = js->linjs.absMap[code];
 
@@ -71,7 +71,7 @@ static void handleAbsEvent(_GLFWjoystick* js, int code, int value)
 
         const int hat = (code - ABS_HAT0X) / 2;
         const int axis = (code - ABS_HAT0X) % 2;
-        int* state = js->linjs.hats[hat];
+        int *state = js->linjs.hats[hat];
 
         // NOTE: Looking at several input drivers, it seems all hat events use
         //       -1 for left / up, 0 for centered and 1 for right / down
@@ -86,7 +86,7 @@ static void handleAbsEvent(_GLFWjoystick* js, int code, int value)
     }
     else
     {
-        const struct input_absinfo* info = &js->linjs.absInfo[code];
+        const struct input_absinfo *info = &js->linjs.absInfo[code];
         float normalized = value;
 
         const int range = info->maximum - info->minimum;
@@ -95,7 +95,7 @@ static void handleAbsEvent(_GLFWjoystick* js, int code, int value)
             // Normalize to 0.0 -> 1.0
             normalized = (normalized - info->minimum) / range;
             // Normalize to -1.0 -> 1.0
-            normalized = normalized * 2.0f - 1.0f;
+            normalized = normalized  *2.0f - 1.0f;
         }
 
         _glfwInputJoystickAxis(js, index, normalized);
@@ -104,14 +104,14 @@ static void handleAbsEvent(_GLFWjoystick* js, int code, int value)
 
 // Poll state of absolute axes
 //
-static void pollAbsState(_GLFWjoystick* js)
+static void pollAbsState(_GLFWjoystick *js)
 {
     for (int code = 0;  code < ABS_CNT;  code++)
     {
         if (js->linjs.absMap[code] < 0)
             continue;
 
-        struct input_absinfo* info = &js->linjs.absInfo[code];
+        struct input_absinfo *info = &js->linjs.absInfo[code];
 
         if (ioctl(js->linjs.fd, EVIOCGABS(code), info) < 0)
             continue;
@@ -124,7 +124,7 @@ static void pollAbsState(_GLFWjoystick* js)
 
 // Attempt to open the specified joystick device
 //
-static GLFWbool openJoystickDevice(const char* path)
+static GLFWbool openJoystickDevice(const char *path)
 {
     for (int jid = 0;  jid <= GLFW_JOYSTICK_LAST;  jid++)
     {
@@ -222,7 +222,7 @@ static GLFWbool openJoystickDevice(const char* path)
         }
     }
 
-    _GLFWjoystick* js =
+    _GLFWjoystick *js =
         _glfwAllocJoystick(name, guid, axisCount, buttonCount, hatCount);
     if (!js)
     {
@@ -243,7 +243,7 @@ static GLFWbool openJoystickDevice(const char* path)
 
 // Frees all resources associated with the specified joystick
 //
-static void closeJoystick(_GLFWjoystick* js)
+static void closeJoystick(_GLFWjoystick *js)
 {
     _glfwInputJoystick(js, GLFW_DISCONNECTED);
     close(js->linjs.fd);
@@ -252,10 +252,10 @@ static void closeJoystick(_GLFWjoystick* js)
 
 // Lexically compare joysticks by name; used by qsort
 //
-static int compareJoysticks(const void* fp, const void* sp)
+static int compareJoysticks(const void *fp, const void *sp)
 {
-    const _GLFWjoystick* fj = fp;
-    const _GLFWjoystick* sj = sp;
+    const _GLFWjoystick *fj = fp;
+    const _GLFWjoystick *sj = sp;
     return strcmp(fj->linjs.path, sj->linjs.path);
 }
 
@@ -268,7 +268,7 @@ static int compareJoysticks(const void* fp, const void* sp)
 //
 GLFWbool _glfwInitJoysticksLinux(void)
 {
-    const char* dirname = "/dev/input";
+    const char *dirname = "/dev/input";
 
     _glfw.linjs.inotify = inotify_init1(IN_NONBLOCK | IN_CLOEXEC);
     if (_glfw.linjs.inotify > 0)
@@ -292,10 +292,10 @@ GLFWbool _glfwInitJoysticksLinux(void)
 
     int count = 0;
 
-    DIR* dir = opendir(dirname);
+    DIR *dir = opendir(dirname);
     if (dir)
     {
-        struct dirent* entry;
+        struct dirent *entry;
 
         while ((entry = readdir(dir)))
         {
@@ -329,7 +329,7 @@ void _glfwTerminateJoysticksLinux(void)
 
     for (jid = 0;  jid <= GLFW_JOYSTICK_LAST;  jid++)
     {
-        _GLFWjoystick* js = _glfw.joysticks + jid;
+        _GLFWjoystick *js = _glfw.joysticks + jid;
         if (js->connected)
             closeJoystick(js);
     }
@@ -360,7 +360,7 @@ void _glfwDetectJoystickConnectionLinux(void)
     while (size > offset)
     {
         regmatch_t match;
-        const struct inotify_event* e = (struct inotify_event*) (buffer + offset);
+        const struct inotify_event *e = (struct inotify_event*) (buffer + offset);
 
         offset += sizeof(struct inotify_event) + e->len;
 
@@ -391,7 +391,7 @@ void _glfwDetectJoystickConnectionLinux(void)
 //////                       GLFW platform API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
+int _glfwPlatformPollJoystick(_GLFWjoystick *js, int mode)
 {
     // Read all queued events (non-blocking)
     for (;;)
@@ -431,7 +431,7 @@ int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
     return js->connected;
 }
 
-void _glfwPlatformUpdateGamepadGUID(char* guid)
+void _glfwPlatformUpdateGamepadGUID(char *guid)
 {
 }
 

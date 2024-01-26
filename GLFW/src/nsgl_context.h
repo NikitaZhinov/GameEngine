@@ -59,8 +59,8 @@ typedef struct _GLFWlibraryNSGL
 
 GLFWbool _glfwInitNSGL(void);
 void _glfwTerminateNSGL(void);
-GLFWbool _glfwCreateContextNSGL(_GLFWwindow* window,
-                                const _GLFWctxconfig* ctxconfig,
-                                const _GLFWfbconfig* fbconfig);
-void _glfwDestroyContextNSGL(_GLFWwindow* window);
+GLFWbool _glfwCreateContextNSGL(_GLFWwindow *window,
+                                const _GLFWctxconfig *ctxconfig,
+                                const _GLFWfbconfig *fbconfig);
+void _glfwDestroyContextNSGL(_GLFWwindow *window);
 

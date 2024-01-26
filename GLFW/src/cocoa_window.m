@@ -37,7 +37,7 @@
 
 // Returns whether the cursor is in the content area of the specified window
 //
-static GLFWbool cursorInContentArea(_GLFWwindow* window)
+static GLFWbool cursorInContentArea(_GLFWwindow *window)
 {
     const NSPoint pos = [window->ns.object mouseLocationOutsideOfEventStream];
     return [window->ns.view mouse:pos inRect:[window->ns.view frame]];
@@ -45,7 +45,7 @@ static GLFWbool cursorInContentArea(_GLFWwindow* window)
 
 // Hides the cursor if not already hidden
 //
-static void hideCursor(_GLFWwindow* window)
+static void hideCursor(_GLFWwindow *window)
 {
     if (!_glfw.ns.cursorHidden)
     {
@@ -56,7 +56,7 @@ static void hideCursor(_GLFWwindow* window)
 
 // Shows the cursor if not already shown
 //
-static void showCursor(_GLFWwindow* window)
+static void showCursor(_GLFWwindow *window)
 {
     if (_glfw.ns.cursorHidden)
     {
@@ -67,7 +67,7 @@ static void showCursor(_GLFWwindow* window)
 
 // Updates the cursor image according to its cursor mode
 //
-static void updateCursorImage(_GLFWwindow* window)
+static void updateCursorImage(_GLFWwindow *window)
 {
     if (window->cursorMode == GLFW_CURSOR_NORMAL)
     {
@@ -84,7 +84,7 @@ static void updateCursorImage(_GLFWwindow* window)
 
 // Apply chosen cursor mode to a focused window
 //
-static void updateCursorMode(_GLFWwindow* window)
+static void updateCursorMode(_GLFWwindow *window)
 {
     if (window->cursorMode == GLFW_CURSOR_DISABLED)
     {
@@ -111,7 +111,7 @@ static void updateCursorMode(_GLFWwindow* window)
 
 // Make the specified window and its video mode active on its monitor
 //
-static void acquireMonitor(_GLFWwindow* window)
+static void acquireMonitor(_GLFWwindow *window)
 {
     _glfwSetVideoModeNS(window->monitor, &window->videoMode);
     const CGRect bounds = CGDisplayBounds(window->monitor->ns.displayID);
@@ -127,7 +127,7 @@ static void acquireMonitor(_GLFWwindow* window)
 
 // Remove the window and restore the original video mode
 //
-static void releaseMonitor(_GLFWwindow* window)
+static void releaseMonitor(_GLFWwindow *window)
 {
     if (window->monitor->window != window)
         return;
@@ -202,7 +202,7 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
 
 @interface GLFWWindowDelegate : NSObject
 {
-    _GLFWwindow* window;
+    _GLFWwindow *window;
 }
 
 - (instancetype)initWithGlfwWindow:(_GLFWwindow *)initWindow;
@@ -307,7 +307,7 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
     _glfwInputWindowFocus(window, GLFW_FALSE);
 }
 
-- (void)windowDidChangeOcclusionState:(NSNotification* )notification
+- (void)windowDidChangeOcclusionState:(NSNotification *)notification
 {
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= 1090
     if ([window->ns.object respondsToSelector:@selector(occlusionState)])
@@ -329,9 +329,9 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
 
 @interface GLFWContentView : NSView <NSTextInputClient>
 {
-    _GLFWwindow* window;
-    NSTrackingArea* trackingArea;
-    NSMutableAttributedString* markedText;
+    _GLFWwindow *window;
+    NSTrackingArea *trackingArea;
+    NSMutableAttributedString *markedText;
 }
 
 - (instancetype)initWithGlfwWindow:(_GLFWwindow *)initWindow;
@@ -627,14 +627,14 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
     const NSPoint pos = [sender draggingLocation];
     _glfwInputCursorPos(window, pos.x, contentRect.size.height - pos.y);
 
-    NSPasteboard* pasteboard = [sender draggingPasteboard];
-    NSDictionary* options = @{NSPasteboardURLReadingFileURLsOnlyKey:@YES};
-    NSArray* urls = [pasteboard readObjectsForClasses:@[[NSURL class]]
+    NSPasteboard *pasteboard = [sender draggingPasteboard];
+    NSDictionary *options = @{NSPasteboardURLReadingFileURLsOnlyKey:@YES};
+    NSArray *urls = [pasteboard readObjectsForClasses:@[[NSURL class]]
                                               options:options];
     const NSUInteger count = [urls count];
     if (count)
     {
-        char** paths = calloc(count, sizeof(char*));
+        char* *paths = calloc(count, sizeof(char*));
 
         for (NSUInteger i = 0;  i < count;  i++)
             paths[i] = _glfw_strdup([urls[i] fileSystemRepresentation]);
@@ -708,8 +708,8 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
 
 - (void)insertText:(id)string replacementRange:(NSRange)replacementRange
 {
-    NSString* characters;
-    NSEvent* event = [NSApp currentEvent];
+    NSString *characters;
+    NSEvent *event = [NSApp currentEvent];
     const int mods = translateFlags([event modifierFlags]);
     const int plain = !(mods & GLFW_MOD_SUPER);
 
@@ -771,9 +771,9 @@ static const NSRange kEmptyRange = { NSNotFound, 0 };
 
 // Create the Cocoa window
 //
-static GLFWbool createNativeWindow(_GLFWwindow* window,
-                                   const _GLFWwndconfig* wndconfig,
-                                   const _GLFWfbconfig* fbconfig)
+static GLFWbool createNativeWindow(_GLFWwindow *window,
+                                   const _GLFWwndconfig *wndconfig,
+                                   const _GLFWfbconfig *fbconfig)
 {
     window->ns.delegate = [[GLFWWindowDelegate alloc] initWithGlfwWindow:window];
     if (window->ns.delegate == nil)
@@ -900,10 +900,10 @@ float _glfwTransformYNS(float y)
 //////                       GLFW platform API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-int _glfwPlatformCreateWindow(_GLFWwindow* window,
-                              const _GLFWwndconfig* wndconfig,
-                              const _GLFWctxconfig* ctxconfig,
-                              const _GLFWfbconfig* fbconfig)
+int _glfwPlatformCreateWindow(_GLFWwindow *window,
+                              const _GLFWwndconfig *wndconfig,
+                              const _GLFWctxconfig *ctxconfig,
+                              const _GLFWfbconfig *fbconfig)
 {
     @autoreleasepool {
 
@@ -924,7 +924,7 @@ int _glfwPlatformCreateWindow(_GLFWwindow* window,
         }
         else if (ctxconfig->source == GLFW_EGL_CONTEXT_API)
         {
-            // EGL implementation on macOS use CALayer* EGLNativeWindowType so we
+            // EGL implementation on macOS use CALayer *EGLNativeWindowType so we
             // need to get the layer for EGL window surface creation.
             [window->ns.view setWantsLayer:YES];
             window->ns.layer = [window->ns.view layer];
@@ -970,7 +970,7 @@ int _glfwPlatformCreateWindow(_GLFWwindow* window,
     } // autoreleasepool
 }
 
-void _glfwPlatformDestroyWindow(_GLFWwindow* window)
+void _glfwPlatformDestroyWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -1001,10 +1001,10 @@ void _glfwPlatformDestroyWindow(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowTitle(_GLFWwindow* window, const char* title)
+void _glfwPlatformSetWindowTitle(_GLFWwindow *window, const char *title)
 {
     @autoreleasepool {
-    NSString* string = @(title);
+    NSString *string = @(title);
     [window->ns.object setTitle:string];
     // HACK: Set the miniwindow title explicitly as setTitle: doesn't update it
     //       if the window lacks NSWindowStyleMaskTitled
@@ -1012,13 +1012,13 @@ void _glfwPlatformSetWindowTitle(_GLFWwindow* window, const char* title)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowIcon(_GLFWwindow* window,
-                                int count, const GLFWimage* images)
+void _glfwPlatformSetWindowIcon(_GLFWwindow *window,
+                                int count, const GLFWimage *images)
 {
     // Regular windows do not have icons
 }
 
-void _glfwPlatformGetWindowPos(_GLFWwindow* window, int* xpos, int* ypos)
+void _glfwPlatformGetWindowPos(_GLFWwindow *window, int *xpos, int *ypos)
 {
     @autoreleasepool {
 
@@ -1033,7 +1033,7 @@ void _glfwPlatformGetWindowPos(_GLFWwindow* window, int* xpos, int* ypos)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowPos(_GLFWwindow* window, int x, int y)
+void _glfwPlatformSetWindowPos(_GLFWwindow *window, int x, int y)
 {
     @autoreleasepool {
 
@@ -1045,7 +1045,7 @@ void _glfwPlatformSetWindowPos(_GLFWwindow* window, int x, int y)
     } // autoreleasepool
 }
 
-void _glfwPlatformGetWindowSize(_GLFWwindow* window, int* width, int* height)
+void _glfwPlatformGetWindowSize(_GLFWwindow *window, int *width, int *height)
 {
     @autoreleasepool {
 
@@ -1059,7 +1059,7 @@ void _glfwPlatformGetWindowSize(_GLFWwindow* window, int* width, int* height)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowSize(_GLFWwindow* window, int width, int height)
+void _glfwPlatformSetWindowSize(_GLFWwindow *window, int width, int height)
 {
     @autoreleasepool {
 
@@ -1081,7 +1081,7 @@ void _glfwPlatformSetWindowSize(_GLFWwindow* window, int width, int height)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowSizeLimits(_GLFWwindow* window,
+void _glfwPlatformSetWindowSizeLimits(_GLFWwindow *window,
                                       int minwidth, int minheight,
                                       int maxwidth, int maxheight)
 {
@@ -1100,7 +1100,7 @@ void _glfwPlatformSetWindowSizeLimits(_GLFWwindow* window,
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowAspectRatio(_GLFWwindow* window, int numer, int denom)
+void _glfwPlatformSetWindowAspectRatio(_GLFWwindow *window, int numer, int denom)
 {
     @autoreleasepool {
     if (numer == GLFW_DONT_CARE || denom == GLFW_DONT_CARE)
@@ -1110,7 +1110,7 @@ void _glfwPlatformSetWindowAspectRatio(_GLFWwindow* window, int numer, int denom
     } // autoreleasepool
 }
 
-void _glfwPlatformGetFramebufferSize(_GLFWwindow* window, int* width, int* height)
+void _glfwPlatformGetFramebufferSize(_GLFWwindow *window, int *width, int *height)
 {
     @autoreleasepool {
 
@@ -1125,9 +1125,9 @@ void _glfwPlatformGetFramebufferSize(_GLFWwindow* window, int* width, int* heigh
     } // autoreleasepool
 }
 
-void _glfwPlatformGetWindowFrameSize(_GLFWwindow* window,
-                                     int* left, int* top,
-                                     int* right, int* bottom)
+void _glfwPlatformGetWindowFrameSize(_GLFWwindow *window,
+                                     int *left, int *top,
+                                     int *right, int *bottom)
 {
     @autoreleasepool {
 
@@ -1148,8 +1148,8 @@ void _glfwPlatformGetWindowFrameSize(_GLFWwindow* window,
     } // autoreleasepool
 }
 
-void _glfwPlatformGetWindowContentScale(_GLFWwindow* window,
-                                        float* xscale, float* yscale)
+void _glfwPlatformGetWindowContentScale(_GLFWwindow *window,
+                                        float *xscale, float *yscale)
 {
     @autoreleasepool {
 
@@ -1164,14 +1164,14 @@ void _glfwPlatformGetWindowContentScale(_GLFWwindow* window,
     } // autoreleasepool
 }
 
-void _glfwPlatformIconifyWindow(_GLFWwindow* window)
+void _glfwPlatformIconifyWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     [window->ns.object miniaturize:nil];
     } // autoreleasepool
 }
 
-void _glfwPlatformRestoreWindow(_GLFWwindow* window)
+void _glfwPlatformRestoreWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     if ([window->ns.object isMiniaturized])
@@ -1181,7 +1181,7 @@ void _glfwPlatformRestoreWindow(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-void _glfwPlatformMaximizeWindow(_GLFWwindow* window)
+void _glfwPlatformMaximizeWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     if (![window->ns.object isZoomed])
@@ -1189,28 +1189,28 @@ void _glfwPlatformMaximizeWindow(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-void _glfwPlatformShowWindow(_GLFWwindow* window)
+void _glfwPlatformShowWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     [window->ns.object orderFront:nil];
     } // autoreleasepool
 }
 
-void _glfwPlatformHideWindow(_GLFWwindow* window)
+void _glfwPlatformHideWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     [window->ns.object orderOut:nil];
     } // autoreleasepool
 }
 
-void _glfwPlatformRequestWindowAttention(_GLFWwindow* window)
+void _glfwPlatformRequestWindowAttention(_GLFWwindow *window)
 {
     @autoreleasepool {
     [NSApp requestUserAttention:NSInformationalRequest];
     } // autoreleasepool
 }
 
-void _glfwPlatformFocusWindow(_GLFWwindow* window)
+void _glfwPlatformFocusWindow(_GLFWwindow *window)
 {
     @autoreleasepool {
     // Make us the active application
@@ -1222,8 +1222,8 @@ void _glfwPlatformFocusWindow(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowMonitor(_GLFWwindow* window,
-                                   _GLFWmonitor* monitor,
+void _glfwPlatformSetWindowMonitor(_GLFWwindow *window,
+                                   _GLFWmonitor *monitor,
                                    int xpos, int ypos,
                                    int width, int height,
                                    int refreshRate)
@@ -1350,28 +1350,28 @@ void _glfwPlatformSetWindowMonitor(_GLFWwindow* window,
     } // autoreleasepool
 }
 
-int _glfwPlatformWindowFocused(_GLFWwindow* window)
+int _glfwPlatformWindowFocused(_GLFWwindow *window)
 {
     @autoreleasepool {
     return [window->ns.object isKeyWindow];
     } // autoreleasepool
 }
 
-int _glfwPlatformWindowIconified(_GLFWwindow* window)
+int _glfwPlatformWindowIconified(_GLFWwindow *window)
 {
     @autoreleasepool {
     return [window->ns.object isMiniaturized];
     } // autoreleasepool
 }
 
-int _glfwPlatformWindowVisible(_GLFWwindow* window)
+int _glfwPlatformWindowVisible(_GLFWwindow *window)
 {
     @autoreleasepool {
     return [window->ns.object isVisible];
     } // autoreleasepool
 }
 
-int _glfwPlatformWindowMaximized(_GLFWwindow* window)
+int _glfwPlatformWindowMaximized(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -1383,7 +1383,7 @@ int _glfwPlatformWindowMaximized(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-int _glfwPlatformWindowHovered(_GLFWwindow* window)
+int _glfwPlatformWindowHovered(_GLFWwindow *window)
 {
     @autoreleasepool {
 
@@ -1401,14 +1401,14 @@ int _glfwPlatformWindowHovered(_GLFWwindow* window)
     } // autoreleasepool
 }
 
-int _glfwPlatformFramebufferTransparent(_GLFWwindow* window)
+int _glfwPlatformFramebufferTransparent(_GLFWwindow *window)
 {
     @autoreleasepool {
     return ![window->ns.object isOpaque] && ![window->ns.view isOpaque];
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowResizable(_GLFWwindow* window, GLFWbool enabled)
+void _glfwPlatformSetWindowResizable(_GLFWwindow *window, GLFWbool enabled)
 {
     @autoreleasepool {
 
@@ -1432,7 +1432,7 @@ void _glfwPlatformSetWindowResizable(_GLFWwindow* window, GLFWbool enabled)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowDecorated(_GLFWwindow* window, GLFWbool enabled)
+void _glfwPlatformSetWindowDecorated(_GLFWwindow *window, GLFWbool enabled)
 {
     @autoreleasepool {
 
@@ -1454,7 +1454,7 @@ void _glfwPlatformSetWindowDecorated(_GLFWwindow* window, GLFWbool enabled)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowFloating(_GLFWwindow* window, GLFWbool enabled)
+void _glfwPlatformSetWindowFloating(_GLFWwindow *window, GLFWbool enabled)
 {
     @autoreleasepool {
     if (enabled)
@@ -1464,14 +1464,14 @@ void _glfwPlatformSetWindowFloating(_GLFWwindow* window, GLFWbool enabled)
     } // autoreleasepool
 }
 
-float _glfwPlatformGetWindowOpacity(_GLFWwindow* window)
+float _glfwPlatformGetWindowOpacity(_GLFWwindow *window)
 {
     @autoreleasepool {
     return (float) [window->ns.object alphaValue];
     } // autoreleasepool
 }
 
-void _glfwPlatformSetWindowOpacity(_GLFWwindow* window, float opacity)
+void _glfwPlatformSetWindowOpacity(_GLFWwindow *window, float opacity)
 {
     @autoreleasepool {
     [window->ns.object setAlphaValue:opacity];
@@ -1496,7 +1496,7 @@ void _glfwPlatformPollEvents(void)
 
     for (;;)
     {
-        NSEvent* event = [NSApp nextEventMatchingMask:NSEventMaskAny
+        NSEvent *event = [NSApp nextEventMatchingMask:NSEventMaskAny
                                             untilDate:[NSDate distantPast]
                                                inMode:NSDefaultRunLoopMode
                                               dequeue:YES];
@@ -1537,8 +1537,8 @@ void _glfwPlatformWaitEventsTimeout(double timeout)
     if (!_glfw.ns.finishedLaunching)
         [NSApp run];
 
-    NSDate* date = [NSDate dateWithTimeIntervalSinceNow:timeout];
-    NSEvent* event = [NSApp nextEventMatchingMask:NSEventMaskAny
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    NSEvent *event = [NSApp nextEventMatchingMask:NSEventMaskAny
                                         untilDate:date
                                            inMode:NSDefaultRunLoopMode
                                           dequeue:YES];
@@ -1557,7 +1557,7 @@ void _glfwPlatformPostEmptyEvent(void)
     if (!_glfw.ns.finishedLaunching)
         [NSApp run];
 
-    NSEvent* event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
+    NSEvent *event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
                                         location:NSMakePoint(0, 0)
                                    modifierFlags:0
                                        timestamp:0
@@ -1571,7 +1571,7 @@ void _glfwPlatformPostEmptyEvent(void)
     } // autoreleasepool
 }
 
-void _glfwPlatformGetCursorPos(_GLFWwindow* window, double* xpos, double* ypos)
+void _glfwPlatformGetCursorPos(_GLFWwindow *window, double *xpos, double *ypos)
 {
     @autoreleasepool {
 
@@ -1587,7 +1587,7 @@ void _glfwPlatformGetCursorPos(_GLFWwindow* window, double* xpos, double* ypos)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetCursorPos(_GLFWwindow* window, double x, double y)
+void _glfwPlatformSetCursorPos(_GLFWwindow *window, double x, double y)
 {
     @autoreleasepool {
 
@@ -1623,7 +1623,7 @@ void _glfwPlatformSetCursorPos(_GLFWwindow* window, double x, double y)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetCursorMode(_GLFWwindow* window, int mode)
+void _glfwPlatformSetCursorMode(_GLFWwindow *window, int mode)
 {
     @autoreleasepool {
     if (_glfwPlatformWindowFocused(window))
@@ -1631,7 +1631,7 @@ void _glfwPlatformSetCursorMode(_GLFWwindow* window, int mode)
     } // autoreleasepool
 }
 
-const char* _glfwPlatformGetScancodeName(int scancode)
+const char *_glfwPlatformGetScancodeName(int scancode)
 {
     @autoreleasepool {
 
@@ -1685,14 +1685,14 @@ int _glfwPlatformGetKeyScancode(int key)
     return _glfw.ns.scancodes[key];
 }
 
-int _glfwPlatformCreateCursor(_GLFWcursor* cursor,
-                              const GLFWimage* image,
+int _glfwPlatformCreateCursor(_GLFWcursor *cursor,
+                              const GLFWimage *image,
                               int xhot, int yhot)
 {
     @autoreleasepool {
 
-    NSImage* native;
-    NSBitmapImageRep* rep;
+    NSImage *native;
+    NSBitmapImageRep *rep;
 
     rep = [[NSBitmapImageRep alloc]
         initWithBitmapDataPlanes:NULL
@@ -1704,13 +1704,13 @@ int _glfwPlatformCreateCursor(_GLFWcursor* cursor,
                         isPlanar:NO
                   colorSpaceName:NSCalibratedRGBColorSpace
                     bitmapFormat:NSBitmapFormatAlphaNonpremultiplied
-                     bytesPerRow:image->width * 4
+                     bytesPerRow:image->width  *4
                     bitsPerPixel:32];
 
     if (rep == nil)
         return GLFW_FALSE;
 
-    memcpy([rep bitmapData], image->pixels, image->width * image->height * 4);
+    memcpy([rep bitmapData], image->pixels, image->width  *image->height  *4);
 
     native = [[NSImage alloc] initWithSize:NSMakeSize(image->width, image->height)];
     [native addRepresentation:rep];
@@ -1729,7 +1729,7 @@ int _glfwPlatformCreateCursor(_GLFWcursor* cursor,
     } // autoreleasepool
 }
 
-int _glfwPlatformCreateStandardCursor(_GLFWcursor* cursor, int shape)
+int _glfwPlatformCreateStandardCursor(_GLFWcursor *cursor, int shape)
 {
     @autoreleasepool {
 
@@ -1759,7 +1759,7 @@ int _glfwPlatformCreateStandardCursor(_GLFWcursor* cursor, int shape)
     } // autoreleasepool
 }
 
-void _glfwPlatformDestroyCursor(_GLFWcursor* cursor)
+void _glfwPlatformDestroyCursor(_GLFWcursor *cursor)
 {
     @autoreleasepool {
     if (cursor->ns.object)
@@ -1767,7 +1767,7 @@ void _glfwPlatformDestroyCursor(_GLFWcursor* cursor)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetCursor(_GLFWwindow* window, _GLFWcursor* cursor)
+void _glfwPlatformSetCursor(_GLFWwindow *window, _GLFWcursor *cursor)
 {
     @autoreleasepool {
     if (cursorInContentArea(window))
@@ -1775,20 +1775,20 @@ void _glfwPlatformSetCursor(_GLFWwindow* window, _GLFWcursor* cursor)
     } // autoreleasepool
 }
 
-void _glfwPlatformSetClipboardString(const char* string)
+void _glfwPlatformSetClipboardString(const char *string)
 {
     @autoreleasepool {
-    NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard declareTypes:@[NSPasteboardTypeString] owner:nil];
     [pasteboard setString:@(string) forType:NSPasteboardTypeString];
     } // autoreleasepool
 }
 
-const char* _glfwPlatformGetClipboardString(void)
+const char *_glfwPlatformGetClipboardString(void)
 {
     @autoreleasepool {
 
-    NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 
     if (![[pasteboard types] containsObject:NSPasteboardTypeString])
     {
@@ -1797,7 +1797,7 @@ const char* _glfwPlatformGetClipboardString(void)
         return NULL;
     }
 
-    NSString* object = [pasteboard stringForType:NSPasteboardTypeString];
+    NSString *object = [pasteboard stringForType:NSPasteboardTypeString];
     if (!object)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,
@@ -1813,7 +1813,7 @@ const char* _glfwPlatformGetClipboardString(void)
     } // autoreleasepool
 }
 
-void _glfwPlatformGetRequiredInstanceExtensions(char** extensions)
+void _glfwPlatformGetRequiredInstanceExtensions(char* *extensions)
 {
     if (_glfw.vk.KHR_surface && _glfw.vk.EXT_metal_surface)
     {
@@ -1835,16 +1835,16 @@ int _glfwPlatformGetPhysicalDevicePresentationSupport(VkInstance instance,
 }
 
 VkResult _glfwPlatformCreateWindowSurface(VkInstance instance,
-                                          _GLFWwindow* window,
-                                          const VkAllocationCallbacks* allocator,
-                                          VkSurfaceKHR* surface)
+                                          _GLFWwindow *window,
+                                          const VkAllocationCallbacks *allocator,
+                                          VkSurfaceKHR *surface)
 {
     @autoreleasepool {
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= 101100
     // HACK: Dynamically load Core Animation to avoid adding an extra
     //       dependency for the majority who don't use MoltenVK
-    NSBundle* bundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/QuartzCore.framework"];
+    NSBundle *bundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/QuartzCore.framework"];
     if (!bundle)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,
@@ -1930,9 +1930,9 @@ VkResult _glfwPlatformCreateWindowSurface(VkInstance instance,
 //////                        GLFW native API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI id glfwGetCocoaWindow(GLFWwindow* handle)
+GLFWAPI id glfwGetCocoaWindow(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(nil);
     return window->ns.object;
 }

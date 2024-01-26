@@ -58,7 +58,7 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 
-const char* _glfwDefaultMappings[] =
+const char *_glfwDefaultMappings[] =
 {
 #if defined(GLFW_BUILD_WIN32_MAPPINGS)
 @GLFW_WIN32_MAPPINGS@

@@ -49,14 +49,14 @@ static int getGLXFBConfigAttrib(GLXFBConfig fbconfig, int attrib)
 
 // Return the GLXFBConfig most closely matching the specified hints
 //
-static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
-                                  GLXFBConfig* result)
+static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig *desired,
+                                  GLXFBConfig *result)
 {
-    GLXFBConfig* nativeConfigs;
-    _GLFWfbconfig* usableConfigs;
-    const _GLFWfbconfig* closest;
+    GLXFBConfig *nativeConfigs;
+    _GLFWfbconfig *usableConfigs;
+    const _GLFWfbconfig *closest;
     int i, nativeCount, usableCount;
-    const char* vendor;
+    const char *vendor;
     GLFWbool trustWindowBit = GLFW_TRUE;
 
     // HACK: This is a (hopefully temporary) workaround for Chromium
@@ -79,7 +79,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
     for (i = 0;  i < nativeCount;  i++)
     {
         const GLXFBConfig n = nativeConfigs[i];
-        _GLFWfbconfig* u = usableConfigs + usableCount;
+        _GLFWfbconfig *u = usableConfigs + usableCount;
 
         // Only consider RGBA GLXFBConfigs
         if (!(getGLXFBConfigAttrib(n, GLX_RENDER_TYPE) & GLX_RGBA_BIT))
@@ -97,7 +97,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
 
         if (desired->transparent)
         {
-            XVisualInfo* vi = glXGetVisualFromFBConfig(_glfw.x11.display, n);
+            XVisualInfo *vi = glXGetVisualFromFBConfig(_glfw.x11.display, n);
             if (vi)
             {
                 u->transparent = _glfwIsVisualTransparentX11(vi->visual);
@@ -145,7 +145,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
 
 // Create the OpenGL context using legacy API
 //
-static GLXContext createLegacyContextGLX(_GLFWwindow* window,
+static GLXContext createLegacyContextGLX(_GLFWwindow *window,
                                          GLXFBConfig fbconfig,
                                          GLXContext share)
 {
@@ -156,7 +156,7 @@ static GLXContext createLegacyContextGLX(_GLFWwindow* window,
                                True);
 }
 
-static void makeContextCurrentGLX(_GLFWwindow* window)
+static void makeContextCurrentGLX(_GLFWwindow *window)
 {
     if (window)
     {
@@ -182,14 +182,14 @@ static void makeContextCurrentGLX(_GLFWwindow* window)
     _glfwPlatformSetTls(&_glfw.contextSlot, window);
 }
 
-static void swapBuffersGLX(_GLFWwindow* window)
+static void swapBuffersGLX(_GLFWwindow *window)
 {
     glXSwapBuffers(_glfw.x11.display, window->context.glx.window);
 }
 
 static void swapIntervalGLX(int interval)
 {
-    _GLFWwindow* window = _glfwPlatformGetTls(&_glfw.contextSlot);
+    _GLFWwindow *window = _glfwPlatformGetTls(&_glfw.contextSlot);
     assert(window != NULL);
 
     if (_glfw.glx.EXT_swap_control)
@@ -207,9 +207,9 @@ static void swapIntervalGLX(int interval)
     }
 }
 
-static int extensionSupportedGLX(const char* extension)
+static int extensionSupportedGLX(const char *extension)
 {
-    const char* extensions =
+    const char *extensions =
         glXQueryExtensionsString(_glfw.x11.display, _glfw.x11.screen);
     if (extensions)
     {
@@ -220,7 +220,7 @@ static int extensionSupportedGLX(const char* extension)
     return GLFW_FALSE;
 }
 
-static GLFWglproc getProcAddressGLX(const char* procname)
+static GLFWglproc getProcAddressGLX(const char *procname)
 {
     if (_glfw.glx.GetProcAddress)
         return _glfw.glx.GetProcAddress((const GLubyte*) procname);
@@ -233,7 +233,7 @@ static GLFWglproc getProcAddressGLX(const char* procname)
     }
 }
 
-static void destroyContextGLX(_GLFWwindow* window)
+static void destroyContextGLX(_GLFWwindow *window)
 {
     if (window->context.glx.window)
     {
@@ -258,7 +258,7 @@ static void destroyContextGLX(_GLFWwindow* window)
 GLFWbool _glfwInitGLX(void)
 {
     int i;
-    const char* sonames[] =
+    const char *sonames[] =
     {
 #if defined(_GLFW_GLX_LIBRARY)
         _GLFW_GLX_LIBRARY,
@@ -450,9 +450,9 @@ void _glfwTerminateGLX(void)
 
 // Create the OpenGL or OpenGL ES context
 //
-GLFWbool _glfwCreateContextGLX(_GLFWwindow* window,
-                               const _GLFWctxconfig* ctxconfig,
-                               const _GLFWfbconfig* fbconfig)
+GLFWbool _glfwCreateContextGLX(_GLFWwindow *window,
+                               const _GLFWctxconfig *ctxconfig,
+                               const _GLFWfbconfig *fbconfig)
 {
     int attribs[40];
     GLXFBConfig native = NULL;
@@ -641,13 +641,13 @@ GLFWbool _glfwCreateContextGLX(_GLFWwindow* window,
 
 // Returns the Visual and depth of the chosen GLXFBConfig
 //
-GLFWbool _glfwChooseVisualGLX(const _GLFWwndconfig* wndconfig,
-                              const _GLFWctxconfig* ctxconfig,
-                              const _GLFWfbconfig* fbconfig,
-                              Visual** visual, int* depth)
+GLFWbool _glfwChooseVisualGLX(const _GLFWwndconfig *wndconfig,
+                              const _GLFWctxconfig *ctxconfig,
+                              const _GLFWfbconfig *fbconfig,
+                              Visual* *visual, int *depth)
 {
     GLXFBConfig native;
-    XVisualInfo* result;
+    XVisualInfo *result;
 
     if (!chooseGLXFBConfig(fbconfig, &native))
     {
@@ -676,9 +676,9 @@ GLFWbool _glfwChooseVisualGLX(const _GLFWwndconfig* wndconfig,
 //////                        GLFW native API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI GLXContext glfwGetGLXContext(GLFWwindow* handle)
+GLFWAPI GLXContext glfwGetGLXContext(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
 
     if (window->context.source != GLFW_NATIVE_CONTEXT_API)
@@ -690,9 +690,9 @@ GLFWAPI GLXContext glfwGetGLXContext(GLFWwindow* handle)
     return window->context.glx.handle;
 }
 
-GLFWAPI GLXWindow glfwGetGLXWindow(GLFWwindow* handle)
+GLFWAPI GLXWindow glfwGetGLXWindow(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(None);
 
     if (window->context.source != GLFW_NATIVE_CONTEXT_API)

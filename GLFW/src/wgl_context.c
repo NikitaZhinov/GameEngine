@@ -35,9 +35,9 @@
 
 // Return the value corresponding to the specified attribute
 //
-static int findPixelFormatAttribValue(const int* attribs,
+static int findPixelFormatAttribValue(const int *attribs,
                                       int attribCount,
-                                      const int* values,
+                                      const int *values,
                                       int attrib)
 {
     int i;
@@ -63,12 +63,12 @@ static int findPixelFormatAttribValue(const int* attribs,
 
 // Return a list of available and usable framebuffer configs
 //
-static int choosePixelFormat(_GLFWwindow* window,
-                             const _GLFWctxconfig* ctxconfig,
-                             const _GLFWfbconfig* fbconfig)
+static int choosePixelFormat(_GLFWwindow *window,
+                             const _GLFWctxconfig *ctxconfig,
+                             const _GLFWfbconfig *fbconfig)
 {
-    _GLFWfbconfig* usableConfigs;
-    const _GLFWfbconfig* closest;
+    _GLFWfbconfig *usableConfigs;
+    const _GLFWfbconfig *closest;
     int i, pixelFormat, nativeCount, usableCount = 0, attribCount = 0;
     int attribs[40];
     int values[sizeof(attribs) / sizeof(attribs[0])];
@@ -122,7 +122,7 @@ static int choosePixelFormat(_GLFWwindow* window,
 
     for (i = 0;  i < nativeCount;  i++)
     {
-        _GLFWfbconfig* u = usableConfigs + usableCount;
+        _GLFWfbconfig *u = usableConfigs + usableCount;
         pixelFormat = i + 1;
 
         if (_glfw.wgl.ARB_pixel_format)
@@ -282,7 +282,7 @@ static int choosePixelFormat(_GLFWwindow* window,
 #undef addAttrib
 #undef findAttribValue
 
-static void makeContextCurrentWGL(_GLFWwindow* window)
+static void makeContextCurrentWGL(_GLFWwindow *window)
 {
     if (window)
     {
@@ -307,7 +307,7 @@ static void makeContextCurrentWGL(_GLFWwindow* window)
     }
 }
 
-static void swapBuffersWGL(_GLFWwindow* window)
+static void swapBuffersWGL(_GLFWwindow *window)
 {
     if (!window->monitor)
     {
@@ -332,7 +332,7 @@ static void swapBuffersWGL(_GLFWwindow* window)
 
 static void swapIntervalWGL(int interval)
 {
-    _GLFWwindow* window = _glfwPlatformGetTls(&_glfw.contextSlot);
+    _GLFWwindow *window = _glfwPlatformGetTls(&_glfw.contextSlot);
     assert(window != NULL);
 
     window->context.wgl.interval = interval;
@@ -356,9 +356,9 @@ static void swapIntervalWGL(int interval)
         wglSwapIntervalEXT(interval);
 }
 
-static int extensionSupportedWGL(const char* extension)
+static int extensionSupportedWGL(const char *extension)
 {
-    const char* extensions = NULL;
+    const char *extensions = NULL;
 
     if (_glfw.wgl.GetExtensionsStringARB)
         extensions = wglGetExtensionsStringARB(wglGetCurrentDC());
@@ -371,7 +371,7 @@ static int extensionSupportedWGL(const char* extension)
     return _glfwStringInExtensionString(extension, extensions);
 }
 
-static GLFWglproc getProcAddressWGL(const char* procname)
+static GLFWglproc getProcAddressWGL(const char *procname)
 {
     const GLFWglproc proc = (GLFWglproc) wglGetProcAddress(procname);
     if (proc)
@@ -380,7 +380,7 @@ static GLFWglproc getProcAddressWGL(const char* procname)
     return (GLFWglproc) GetProcAddress(_glfw.wgl.instance, procname);
 }
 
-static void destroyContextWGL(_GLFWwindow* window)
+static void destroyContextWGL(_GLFWwindow *window)
 {
     if (window->context.wgl.handle)
     {
@@ -531,9 +531,9 @@ void _glfwTerminateWGL(void)
 
 // Create the OpenGL or OpenGL ES context
 //
-GLFWbool _glfwCreateContextWGL(_GLFWwindow* window,
-                               const _GLFWctxconfig* ctxconfig,
-                               const _GLFWfbconfig* fbconfig)
+GLFWbool _glfwCreateContextWGL(_GLFWwindow *window,
+                               const _GLFWctxconfig *ctxconfig,
+                               const _GLFWfbconfig *fbconfig)
 {
     int attribs[40];
     int pixelFormat;
@@ -771,9 +771,9 @@ GLFWbool _glfwCreateContextWGL(_GLFWwindow* window,
 //////                        GLFW native API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI HGLRC glfwGetWGLContext(GLFWwindow* handle)
+GLFWAPI HGLRC glfwGetWGLContext(GLFWwindow *handle)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
 
     if (window->context.source != GLFW_NATIVE_CONTEXT_API)

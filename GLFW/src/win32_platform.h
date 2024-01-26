@@ -221,23 +221,23 @@ typedef enum
 #endif
 
 // xinput.dll function pointer typedefs
-typedef DWORD (WINAPI * PFN_XInputGetCapabilities)(DWORD,DWORD,XINPUT_CAPABILITIES*);
-typedef DWORD (WINAPI * PFN_XInputGetState)(DWORD,XINPUT_STATE*);
+typedef DWORD (WINAPI  *PFN_XInputGetCapabilities)(DWORD,DWORD,XINPUT_CAPABILITIES*);
+typedef DWORD (WINAPI  *PFN_XInputGetState)(DWORD,XINPUT_STATE*);
 #define XInputGetCapabilities _glfw.win32.xinput.GetCapabilities
 #define XInputGetState _glfw.win32.xinput.GetState
 
 // dinput8.dll function pointer typedefs
-typedef HRESULT (WINAPI * PFN_DirectInput8Create)(HINSTANCE,DWORD,REFIID,LPVOID*,LPUNKNOWN);
+typedef HRESULT (WINAPI  *PFN_DirectInput8Create)(HINSTANCE,DWORD,REFIID,LPVOID*,LPUNKNOWN);
 #define DirectInput8Create _glfw.win32.dinput8.Create
 
 // user32.dll function pointer typedefs
-typedef BOOL (WINAPI * PFN_SetProcessDPIAware)(void);
-typedef BOOL (WINAPI * PFN_ChangeWindowMessageFilterEx)(HWND,UINT,DWORD,CHANGEFILTERSTRUCT*);
-typedef BOOL (WINAPI * PFN_EnableNonClientDpiScaling)(HWND);
-typedef BOOL (WINAPI * PFN_SetProcessDpiAwarenessContext)(HANDLE);
-typedef UINT (WINAPI * PFN_GetDpiForWindow)(HWND);
-typedef BOOL (WINAPI * PFN_AdjustWindowRectExForDpi)(LPRECT,DWORD,BOOL,DWORD,UINT);
-typedef int (WINAPI * PFN_GetSystemMetricsForDpi)(int,UINT);
+typedef BOOL (WINAPI  *PFN_SetProcessDPIAware)(void);
+typedef BOOL (WINAPI  *PFN_ChangeWindowMessageFilterEx)(HWND,UINT,DWORD,CHANGEFILTERSTRUCT*);
+typedef BOOL (WINAPI  *PFN_EnableNonClientDpiScaling)(HWND);
+typedef BOOL (WINAPI  *PFN_SetProcessDpiAwarenessContext)(HANDLE);
+typedef UINT (WINAPI  *PFN_GetDpiForWindow)(HWND);
+typedef BOOL (WINAPI  *PFN_AdjustWindowRectExForDpi)(LPRECT,DWORD,BOOL,DWORD,UINT);
+typedef int (WINAPI  *PFN_GetSystemMetricsForDpi)(int,UINT);
 #define SetProcessDPIAware _glfw.win32.user32.SetProcessDPIAware_
 #define ChangeWindowMessageFilterEx _glfw.win32.user32.ChangeWindowMessageFilterEx_
 #define EnableNonClientDpiScaling _glfw.win32.user32.EnableNonClientDpiScaling_
@@ -247,23 +247,23 @@ typedef int (WINAPI * PFN_GetSystemMetricsForDpi)(int,UINT);
 #define GetSystemMetricsForDpi _glfw.win32.user32.GetSystemMetricsForDpi_
 
 // dwmapi.dll function pointer typedefs
-typedef HRESULT (WINAPI * PFN_DwmIsCompositionEnabled)(BOOL*);
-typedef HRESULT (WINAPI * PFN_DwmFlush)(VOID);
-typedef HRESULT(WINAPI * PFN_DwmEnableBlurBehindWindow)(HWND,const DWM_BLURBEHIND*);
-typedef HRESULT (WINAPI * PFN_DwmGetColorizationColor)(DWORD*,BOOL*);
+typedef HRESULT (WINAPI  *PFN_DwmIsCompositionEnabled)(BOOL*);
+typedef HRESULT (WINAPI  *PFN_DwmFlush)(VOID);
+typedef HRESULT(WINAPI  *PFN_DwmEnableBlurBehindWindow)(HWND,const DWM_BLURBEHIND*);
+typedef HRESULT (WINAPI  *PFN_DwmGetColorizationColor)(DWORD*,BOOL*);
 #define DwmIsCompositionEnabled _glfw.win32.dwmapi.IsCompositionEnabled
 #define DwmFlush _glfw.win32.dwmapi.Flush
 #define DwmEnableBlurBehindWindow _glfw.win32.dwmapi.EnableBlurBehindWindow
 #define DwmGetColorizationColor _glfw.win32.dwmapi.GetColorizationColor
 
 // shcore.dll function pointer typedefs
-typedef HRESULT (WINAPI * PFN_SetProcessDpiAwareness)(PROCESS_DPI_AWARENESS);
-typedef HRESULT (WINAPI * PFN_GetDpiForMonitor)(HMONITOR,MONITOR_DPI_TYPE,UINT*,UINT*);
+typedef HRESULT (WINAPI  *PFN_SetProcessDpiAwareness)(PROCESS_DPI_AWARENESS);
+typedef HRESULT (WINAPI  *PFN_GetDpiForMonitor)(HMONITOR,MONITOR_DPI_TYPE,UINT*,UINT*);
 #define SetProcessDpiAwareness _glfw.win32.shcore.SetProcessDpiAwareness_
 #define GetDpiForMonitor _glfw.win32.shcore.GetDpiForMonitor_
 
 // ntdll.dll function pointer typedefs
-typedef LONG (WINAPI * PFN_RtlVerifyVersionInfo)(OSVERSIONINFOEXW*,ULONG,ULONGLONG);
+typedef LONG (WINAPI  *PFN_RtlVerifyVersionInfo)(OSVERSIONINFOEXW*,ULONG,ULONGLONG);
 #define RtlVerifyVersionInfo _glfw.win32.ntdll.RtlVerifyVersionInfo_
 
 typedef VkFlags VkWin32SurfaceCreateFlagsKHR;
@@ -271,7 +271,7 @@ typedef VkFlags VkWin32SurfaceCreateFlagsKHR;
 typedef struct VkWin32SurfaceCreateInfoKHR
 {
     VkStructureType                 sType;
-    const void*                     pNext;
+    const void *                    pNext;
     VkWin32SurfaceCreateFlagsKHR    flags;
     HINSTANCE                       hinstance;
     HWND                            hwnd;
@@ -339,24 +339,24 @@ typedef struct _GLFWlibraryWin32
     HDEVNOTIFY          deviceNotificationHandle;
     DWORD               foregroundLockTimeout;
     int                 acquiredMonitorCount;
-    char*               clipboardString;
+    char *              clipboardString;
     short int           keycodes[512];
     short int           scancodes[GLFW_KEY_LAST + 1];
     char                keynames[GLFW_KEY_LAST + 1][5];
     // Where to place the cursor when re-enabled
     double              restoreCursorPosX, restoreCursorPosY;
     // The window whose disabled cursor mode is active
-    _GLFWwindow*        disabledCursorWindow;
+    _GLFWwindow *       disabledCursorWindow;
     // The window the cursor is captured in
-    _GLFWwindow*        capturedCursorWindow;
-    RAWINPUT*           rawInput;
+    _GLFWwindow *       capturedCursorWindow;
+    RAWINPUT *          rawInput;
     int                 rawInputSize;
     UINT                mouseTrailSize;
 
     struct {
         HINSTANCE                       instance;
         PFN_DirectInput8Create          Create;
-        IDirectInput8W*                 api;
+        IDirectInput8W *                api;
     } dinput8;
 
     struct {
@@ -444,17 +444,17 @@ typedef struct _GLFWmutexWin32
 GLFWbool _glfwRegisterWindowClassWin32(void);
 void _glfwUnregisterWindowClassWin32(void);
 
-WCHAR* _glfwCreateWideStringFromUTF8Win32(const char* source);
-char* _glfwCreateUTF8FromWideStringWin32(const WCHAR* source);
+WCHAR *_glfwCreateWideStringFromUTF8Win32(const char *source);
+char *_glfwCreateUTF8FromWideStringWin32(const WCHAR *source);
 BOOL _glfwIsWindowsVersionOrGreaterWin32(WORD major, WORD minor, WORD sp);
 BOOL _glfwIsWindows10BuildOrGreaterWin32(WORD build);
-void _glfwInputErrorWin32(int error, const char* description);
+void _glfwInputErrorWin32(int error, const char *description);
 void _glfwUpdateKeyNamesWin32(void);
 
 void _glfwInitTimerWin32(void);
 
 void _glfwPollMonitorsWin32(void);
-void _glfwSetVideoModeWin32(_GLFWmonitor* monitor, const GLFWvidmode* desired);
-void _glfwRestoreVideoModeWin32(_GLFWmonitor* monitor);
-void _glfwGetMonitorContentScaleWin32(HMONITOR handle, float* xscale, float* yscale);
+void _glfwSetVideoModeWin32(_GLFWmonitor *monitor, const GLFWvidmode *desired);
+void _glfwRestoreVideoModeWin32(_GLFWmonitor *monitor);
+void _glfwGetMonitorContentScaleWin32(HMONITOR handle, float *xscale, float *yscale);
 

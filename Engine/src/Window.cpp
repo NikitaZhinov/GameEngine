@@ -6,7 +6,7 @@ void Window::set_size(int width, int height) {
     this->height = height;
 }
 
-void Window::set_title(const char* title) { this->title = title; }
+void Window::set_title(const char *title) { this->title = title; }
 
 void Window::set_background_color(int r, int g, int b) {
     background_color.r = r;

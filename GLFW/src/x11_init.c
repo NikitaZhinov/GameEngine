@@ -46,7 +46,7 @@
 // NOTE: This is only used as a fallback, in case the XKB method fails
 //       It is layout-dependent and will fail partially on most non-US layouts
 //
-static int translateKeySyms(const KeySym* keysyms, int width)
+static int translateKeySyms(const KeySym *keysyms, int width)
 {
     if (width > 1)
     {
@@ -233,7 +233,7 @@ static void createKeyTables(void)
         const struct
         {
             int key;
-            char* name;
+            char *name;
         } keymap[] =
         {
             { GLFW_KEY_GRAVE_ACCENT, "TLDE" },
@@ -414,7 +414,7 @@ static void createKeyTables(void)
         XDisplayKeycodes(_glfw.x11.display, &scancodeMin, &scancodeMax);
 
     int width;
-    KeySym* keysyms = XGetKeyboardMapping(_glfw.x11.display,
+    KeySym *keysyms = XGetKeyboardMapping(_glfw.x11.display,
                                           scancodeMin,
                                           scancodeMax - scancodeMin + 1,
                                           &width);
@@ -425,7 +425,7 @@ static void createKeyTables(void)
         // lookups
         if (_glfw.x11.keycodes[scancode] < 0)
         {
-            const size_t base = (scancode - scancodeMin) * width;
+            const size_t base = (scancode - scancodeMin)  *width;
             _glfw.x11.keycodes[scancode] = translateKeySyms(&keysyms[base], width);
         }
 
@@ -442,7 +442,7 @@ static void createKeyTables(void)
 static GLFWbool hasUsableInputMethodStyle(void)
 {
     GLFWbool found = GLFW_FALSE;
-    XIMStyles* styles = NULL;
+    XIMStyles *styles = NULL;
 
     if (XGetIMValues(_glfw.x11.im, XNQueryInputStyle, &styles, NULL) != NULL)
         return GLFW_FALSE;
@@ -462,9 +462,9 @@ static GLFWbool hasUsableInputMethodStyle(void)
 
 // Check whether the specified atom is supported
 //
-static Atom getAtomIfSupported(Atom* supportedAtoms,
+static Atom getAtomIfSupported(Atom *supportedAtoms,
                                unsigned long atomCount,
-                               const char* atomName)
+                               const char *atomName)
 {
     const Atom atom = XInternAtom(_glfw.x11.display, atomName, False);
 
@@ -483,7 +483,7 @@ static void detectEWMH(void)
 {
     // First we read the _NET_SUPPORTING_WM_CHECK property on the root window
 
-    Window* windowFromRoot = NULL;
+    Window *windowFromRoot = NULL;
     if (!_glfwGetWindowPropertyX11(_glfw.x11.root,
                                    _glfw.x11.NET_SUPPORTING_WM_CHECK,
                                    XA_WINDOW,
@@ -497,7 +497,7 @@ static void detectEWMH(void)
     // If it exists, it should be the XID of a top-level window
     // Then we look for the same property on that window
 
-    Window* windowFromChild = NULL;
+    Window *windowFromChild = NULL;
     if (!_glfwGetWindowPropertyX11(*windowFromRoot,
                                    _glfw.x11.NET_SUPPORTING_WM_CHECK,
                                    XA_WINDOW,
@@ -526,7 +526,7 @@ static void detectEWMH(void)
     // looking in the _NET_SUPPORTED property on the root window
     // It should contain a list of supported EWMH protocol and state atoms
 
-    Atom* supportedAtoms = NULL;
+    Atom *supportedAtoms = NULL;
     const unsigned long atomCount =
         _glfwGetWindowPropertyX11(_glfw.x11.root,
                                   _glfw.x11.NET_SUPPORTED,
@@ -694,7 +694,7 @@ static GLFWbool initExtensions(void)
 
     if (_glfw.x11.randr.available)
     {
-        XRRScreenResources* sr = XRRGetScreenResourcesCurrent(_glfw.x11.display,
+        XRRScreenResources *sr = XRRGetScreenResourcesCurrent(_glfw.x11.display,
                                                               _glfw.x11.root);
 
         if (!sr->ncrtc || !XRRGetCrtcGammaSize(_glfw.x11.display, sr->crtcs[0]))
@@ -916,7 +916,7 @@ static GLFWbool initExtensions(void)
 
 // Retrieve system content scale via folklore heuristics
 //
-static void getSystemContentScale(float* xscale, float* yscale)
+static void getSystemContentScale(float *xscale, float *yscale)
 {
     // Start by assuming the default X11 DPI
     // NOTE: Some desktop environments (KDE) may remove the Xft.dpi field when it
@@ -926,14 +926,14 @@ static void getSystemContentScale(float* xscale, float* yscale)
     // NOTE: Basing the scale on Xft.dpi where available should provide the most
     //       consistent user experience (matches Qt, Gtk, etc), although not
     //       always the most accurate one
-    char* rms = XResourceManagerString(_glfw.x11.display);
+    char *rms = XResourceManagerString(_glfw.x11.display);
     if (rms)
     {
         XrmDatabase db = XrmGetStringDatabase(rms);
         if (db)
         {
             XrmValue value;
-            char* type = NULL;
+            char *type = NULL;
 
             if (XrmGetResource(db, "Xft.dpi", "Xft.Dpi", &type, &value))
             {
@@ -953,7 +953,7 @@ static void getSystemContentScale(float* xscale, float* yscale)
 //
 static Cursor createHiddenCursor(void)
 {
-    unsigned char pixels[16 * 16 * 4] = { 0 };
+    unsigned char pixels[16  *16  *4] = { 0 };
     GLFWimage image = { 16, 16, pixels };
     return _glfwCreateCursorX11(&image, 0, 0);
 }
@@ -1005,7 +1005,7 @@ static GLFWbool createEmptyEventPipe(void)
 
 // X error handler
 //
-static int errorHandler(Display *display, XErrorEvent* event)
+static int errorHandler(Display *display, XErrorEvent *event)
 {
     if (_glfw.x11.display != display)
         return 0;
@@ -1040,7 +1040,7 @@ void _glfwReleaseErrorHandlerX11(void)
 
 // Reports the specified error, appending information about the last X error
 //
-void _glfwInputErrorX11(int error, const char* message)
+void _glfwInputErrorX11(int error, const char *message)
 {
     char buffer[_GLFW_MESSAGE_SIZE];
     XGetErrorText(_glfw.x11.display, _glfw.x11.errorCode,
@@ -1051,7 +1051,7 @@ void _glfwInputErrorX11(int error, const char* message)
 
 // Creates a native cursor object from the specified image and hotspot
 //
-Cursor _glfwCreateCursorX11(const GLFWimage* image, int xhot, int yhot)
+Cursor _glfwCreateCursorX11(const GLFWimage *image, int xhot, int yhot)
 {
     int i;
     Cursor cursor;
@@ -1059,24 +1059,24 @@ Cursor _glfwCreateCursorX11(const GLFWimage* image, int xhot, int yhot)
     if (!_glfw.x11.xcursor.handle)
         return None;
 
-    XcursorImage* native = XcursorImageCreate(image->width, image->height);
+    XcursorImage *native = XcursorImageCreate(image->width, image->height);
     if (native == NULL)
         return None;
 
     native->xhot = xhot;
     native->yhot = yhot;
 
-    unsigned char* source = (unsigned char*) image->pixels;
-    XcursorPixel* target = native->pixels;
+    unsigned char *source = (unsigned char*) image->pixels;
+    XcursorPixel *target = native->pixels;
 
-    for (i = 0;  i < image->width * image->height;  i++, target++, source += 4)
+    for (i = 0;  i < image->width  *image->height;  i++, target++, source += 4)
     {
         unsigned int alpha = source[3];
 
         *target = (alpha << 24) |
-                  ((unsigned char) ((source[0] * alpha) / 255) << 16) |
-                  ((unsigned char) ((source[1] * alpha) / 255) <<  8) |
-                  ((unsigned char) ((source[2] * alpha) / 255) <<  0);
+                  ((unsigned char) ((source[0]  *alpha) / 255) << 16) |
+                  ((unsigned char) ((source[1]  *alpha) / 255) <<  8) |
+                  ((unsigned char) ((source[2]  *alpha) / 255) <<  0);
     }
 
     cursor = XcursorImageLoadCursor(_glfw.x11.display, native);
@@ -1105,7 +1105,7 @@ int _glfwPlatformInit(void)
     _glfw.x11.display = XOpenDisplay(NULL);
     if (!_glfw.x11.display)
     {
-        const char* display = getenv("DISPLAY");
+        const char *display = getenv("DISPLAY");
         if (display)
         {
             _glfwInputError(GLFW_PLATFORM_ERROR,
@@ -1255,7 +1255,7 @@ void _glfwPlatformTerminate(void)
     }
 }
 
-const char* _glfwPlatformGetVersionString(void)
+const char *_glfwPlatformGetVersionString(void)
 {
     return _GLFW_VERSION_NUMBER " X11 GLX EGL OSMesa"
 #if defined(_POSIX_TIMERS) && defined(_POSIX_MONOTONIC_CLOCK)

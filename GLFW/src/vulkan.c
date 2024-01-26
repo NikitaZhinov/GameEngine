@@ -44,7 +44,7 @@
 GLFWbool _glfwInitVulkan(int mode)
 {
     VkResult err;
-    VkExtensionProperties* ep;
+    VkExtensionProperties *ep;
     uint32_t i, count;
 
     if (_glfw.vk.available)
@@ -164,7 +164,7 @@ void _glfwTerminateVulkan(void)
 #endif
 }
 
-const char* _glfwGetVulkanResultString(VkResult result)
+const char *_glfwGetVulkanResultString(VkResult result)
 {
     switch (result)
     {
@@ -230,7 +230,7 @@ GLFWAPI int glfwVulkanSupported(void)
     return _glfwInitVulkan(_GLFW_FIND_LOADER);
 }
 
-GLFWAPI const char** glfwGetRequiredInstanceExtensions(uint32_t* count)
+GLFWAPI const char* *glfwGetRequiredInstanceExtensions(uint32_t *count)
 {
     assert(count != NULL);
 
@@ -249,7 +249,7 @@ GLFWAPI const char** glfwGetRequiredInstanceExtensions(uint32_t* count)
 }
 
 GLFWAPI GLFWvkproc glfwGetInstanceProcAddress(VkInstance instance,
-                                              const char* procname)
+                                              const char *procname)
 {
     GLFWvkproc proc;
     assert(procname != NULL);
@@ -299,11 +299,11 @@ GLFWAPI int glfwGetPhysicalDevicePresentationSupport(VkInstance instance,
 }
 
 GLFWAPI VkResult glfwCreateWindowSurface(VkInstance instance,
-                                         GLFWwindow* handle,
-                                         const VkAllocationCallbacks* allocator,
-                                         VkSurfaceKHR* surface)
+                                         GLFWwindow *handle,
+                                         const VkAllocationCallbacks *allocator,
+                                         VkSurfaceKHR *surface)
 {
-    _GLFWwindow* window = (_GLFWwindow*) handle;
+    _GLFWwindow *window = (_GLFWwindow*) handle;
     assert(instance != VK_NULL_HANDLE);
     assert(window != NULL);
     assert(surface != NULL);

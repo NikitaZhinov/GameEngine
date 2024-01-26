@@ -5,7 +5,7 @@
 class Window {
 public:
     void set_size(int width, int height);
-    void set_title(const char* title);
+    void set_title(const char *title);
     void set_background_color(int r, int g, int b);
     void set_background_color(int r, int g, int b, float a);
     void set_transparency(int a);
