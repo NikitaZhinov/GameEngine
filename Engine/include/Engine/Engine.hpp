@@ -4,22 +4,22 @@
 #include <string>
 #include <vector>
 
-typedef struct {
-	int x, y;
-} Size;
+struct Size {
+    int x, y;
+};
 
-typedef struct {
-	float x, y, z;
-} Point;
+struct Point {
+    float x, y, z;
+};
 
-typedef struct {
-	int r, g, b;
-	float a;
-} Color;
+struct Color {
+    int r, g, b;
+    float a;
+};
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
-#include <Window/Window.hpp>
-#include <Objects/Objects.hpp>
 #include <MainScript.hpp>
+#include <Objects/Objects.hpp>
+#include <Window/Window.hpp>
