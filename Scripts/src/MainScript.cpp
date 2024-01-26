@@ -1,13 +1,8 @@
 #include <MainScript.hpp>
 
 namespace scripts {
-	Point ver[4] = {
-		{  0.5,  0.5, 0 },
-		{  0.5, -0.5, 0 },
-		{ -0.5, -0.5, 0 },
-		{ -0.5,  0.5, 0 }
-	};
-	Square tr(ver);
+	Size s = { 1, 1 };
+	Rectangle tr(s);
 
 	void MainScript::Start() {
 		Window window;

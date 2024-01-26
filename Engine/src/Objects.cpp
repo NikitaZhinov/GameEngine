@@ -69,6 +69,38 @@ Point *Triangle::get_vertices() { return vertices; }
 
 Color Triangle::get_color() { return color; }
 
+Rectangle::Rectangle() {
+	Point ver[4] = { {0} };
+	set_vertices(ver);
+	set_color({ 0 });
+}
+
+Rectangle::Rectangle(Size size) {
+	Point ver[4] = {
+		{0, 0, 0}, {size.x, 0, 0}, {size.x, size.y, 0}, {0, size.y, 0} };
+	set_vertices(ver);
+	set_color({ 0 });
+}
+
+void Rectangle::draw() { draw_obj(vertices, 4, color); }
+
+void Rectangle::set_size(Size size) {
+	Point ver[4] = {
+		{0, 0, 0}, {size.x, 0, 0}, {size.x, size.y, 0}, {0, size.y, 0} };
+	set_vertices(ver);
+}
+
+void Rectangle::set_vertices(Point vertices[4]) {
+	for (int i = 0; i < 4; i++) {
+		this->vertices[i].x = vertices[i].x;
+		this->vertices[i].y = vertices[i].y;
+		this->vertices[i].z = vertices[i].z;
+	}
+}
+
+Point* Rectangle::get_vertices() { return vertices; }
+
+Color Rectangle::get_color() { return color; }
 
 Square::Square() {
 	Point ver[4] = { { 0 } };
