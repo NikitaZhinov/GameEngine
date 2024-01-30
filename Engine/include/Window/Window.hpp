@@ -5,6 +5,7 @@
 class Window {
 public:
     void set_size(int width, int height);
+    void set_size(Size size);
     void set_title(const char* title);
     void set_background_color(int r, int g, int b);
     void set_background_color(int r, int g, int b, float a);
@@ -16,8 +17,8 @@ public:
     float get_transparency();
 
 private:
-    static int width;
-    static int height;
+    static float width;
+    static float height;
     static std::string title;
     static Color background_color;
 };
