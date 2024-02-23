@@ -1,19 +1,31 @@
 #include <MainScript.hpp>
 
 namespace scripts {
-	Size s = { 1, 1 };
-	Rectangle tr(s);
+    Point v[5] = {
+        {   0,    0, 0},
+        {   1,    0, 0},
+        {   1,   -1, 0},
+        {   0,   -1, 0},
+        {-0.3, -0.5, 0}
+    };
+    Size s = { 1, 1 };
+    Square tr(v, 5);
+    Rectangle tr1(s);
 
-	void MainScript::Start() {
-		Window window;
+    void MainScript::Start() {
+        Window window;
 
-		window.set_size(800, 600);
-		window.set_title("shiiiiii");
-		window.set_background_color(255, 255, 255);
-		tr.set_color({ 255, 0, 0 });
-	}
+        window.set_size(800, 600);
+        window.set_title("shiiiiii");
+        window.set_background_color(255, 255, 255);
+        tr.set_color({ 255, 0, 0 });
+        tr1.set_color({ 0, 255, 0 });
+        tr.set_position(-1, 0.5, 0);
+        tr1.set_position(0, 0.5, 0);
+    }
 
-	void MainScript::Update() {
-		tr.draw();
-	}
-}
+    void MainScript::Update() {
+        tr.draw();
+        tr1.draw();
+    }
+} // namespace scripts
