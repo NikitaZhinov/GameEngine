@@ -4,7 +4,7 @@ IObject::~IObject() {
     delete[] vertices;
 }
 
-void IObject::draw_obj(Point *vertices, Color color) {
+void IObject::draw() {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
     glVertexPointer(3, GL_FLOAT, 0, vertices);
@@ -70,10 +70,6 @@ Line::Line(Point vertices[2]) {
     set_color({ 0 });
 }
 
-void Line::draw() {
-    draw_obj(vertices, color);
-}
-
 Triangle::Triangle() {
     Point ver[3] = { { 0 } };
     count_vertices = 3;
@@ -85,10 +81,6 @@ Triangle::Triangle(Point vertices[3]) {
     count_vertices = 3;
     set_vertices(vertices);
     set_color({ 0 });
-}
-
-void Triangle::draw() {
-    draw_obj(vertices, color);
 }
 
 Rectangle::Rectangle() {
@@ -110,10 +102,6 @@ Rectangle::Rectangle(Size size) {
     set_color({ 0 });
 }
 
-void Rectangle::draw() {
-    draw_obj(vertices, color);
-}
-
 void Rectangle::set_size(Size size) {
     Point ver[4] = {
         {     0,       0, 0},
@@ -128,8 +116,4 @@ Square::Square(Point *vertices, int n) {
     count_vertices = n;
     set_vertices(vertices);
     set_color({ 0 });
-}
-
-void Square::draw() {
-    draw_obj(vertices, color);
 }
