@@ -1,4 +1,4 @@
-#include <Objects/Objects.hpp>
+#include "Objects/Objects.hpp"
 
 IObject::~IObject() {
     delete[] vertices;

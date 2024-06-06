@@ -1,4 +1,4 @@
-#include <MainScript.hpp>
+#include "MainScript.hpp"
 
 namespace scripts {
     Point v[5] = {

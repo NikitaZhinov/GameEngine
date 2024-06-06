@@ -17,7 +17,7 @@ struct Color {
     float a;
 };
 
-#include <GLFW/glfw3.h>
-#include <MainScript.hpp>
-#include <Objects/Objects.hpp>
-#include <Window/Window.hpp>
+#include "GLFW/glfw3.h"
+#include "MainScript.hpp"
+#include "Objects/Objects.hpp"
+#include "Window/Window.hpp"
