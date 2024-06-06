@@ -3,9 +3,8 @@
 int main() {
     GLFWwindow *window;
     Window WindowSettings;
-    scripts::MainScript Script;
 
-    Script.Start();
+    scripts::start();
 
     if (!glfwInit()) {
         std::cout << "Can't init GLFW!" << std::endl;
@@ -28,7 +27,7 @@ int main() {
         return -3;
     }
 
-#ifndef NDEBUG
+#ifdef DEBUG
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GPU " << glGetString(GL_RENDERER) << std::endl;
 #endif // NDEBUG
@@ -41,7 +40,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Script.Update();
+        scripts::update();
 
         glfwSwapBuffers(window);
 
