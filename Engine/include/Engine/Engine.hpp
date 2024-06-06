@@ -18,6 +18,6 @@ struct Color {
 };
 
 #include "GLFW/glfw3.h"
-#include "MainScript.hpp"
 #include "Objects/Objects.hpp"
+#include "Scripts/MainScript.hpp"
 #include "Window/Window.hpp"

@@ -58,56 +58,68 @@ Color IObject::get_color() {
 }
 
 Line::Line() {
-    Point ver[2] = { { 0 } };
+    Point ver[2] = {
+        { 0, 0, 0 },
+        { 0, 0, 0 }
+    };
     count_vertices = 2;
     set_vertices(ver);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 Line::Line(Point vertices[2]) {
     count_vertices = 2;
     set_vertices(vertices);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 Triangle::Triangle() {
-    Point ver[3] = { { 0 } };
+    Point ver[3] = {
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 }
+    };
     count_vertices = 3;
     set_vertices(ver);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 Triangle::Triangle(Point vertices[3]) {
     count_vertices = 3;
     set_vertices(vertices);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 Rectangle::Rectangle() {
-    Point ver[4] = { { 0 } };
+    Point ver[4] = {
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 }
+    };
     count_vertices = 4;
     set_vertices(ver);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 Rectangle::Rectangle(Size size) {
     Point ver[4] = {
-        {     0,       0, 0},
-        {size.x,       0, 0},
-        {size.x, -size.y, 0},
-        {     0, -size.y, 0}
+        {      0,       0, 0 },
+        { size.x,       0, 0 },
+        { size.x, -size.y, 0 },
+        {      0, -size.y, 0 }
     };
     count_vertices = 4;
     set_vertices(ver);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
 
 void Rectangle::set_size(Size size) {
     Point ver[4] = {
-        {     0,       0, 0},
-        {size.x,       0, 0},
-        {size.x, -size.y, 0},
-        {     0, -size.y, 0}
+        {      0,       0, 0 },
+        { size.x,       0, 0 },
+        { size.x, -size.y, 0 },
+        {      0, -size.y, 0 }
     };
     set_vertices(ver);
 }
@@ -115,5 +127,5 @@ void Rectangle::set_size(Size size) {
 Square::Square(Point *vertices, int n) {
     count_vertices = n;
     set_vertices(vertices);
-    set_color({ 0 });
+    set_color({ 0, 0, 0, 0 });
 }
