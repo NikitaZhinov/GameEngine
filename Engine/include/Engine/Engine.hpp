@@ -1,5 +1,9 @@
 #pragma once
 
+#define GLFW_INCLUDE_NONE
+
+#include <GLFW/glfw3.h>
+#include <chrono>
 #include <glad/glad.h>
 #include <iostream>
 #include <string>
@@ -17,7 +21,6 @@ struct Color {
     float a;
 };
 
-#include "GLFW/glfw3.h"
 #include "Objects/Objects.hpp"
 #include "Scripts/MainScript.hpp"
 #include "Window/Window.hpp"

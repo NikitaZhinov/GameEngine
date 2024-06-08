@@ -1,4 +1,4 @@
-#include "Scripts/MainScript.hpp"
+#include "Engine/Scripts/MainScript.hpp"
 
 namespace scripts {
     Point v[5] = {
@@ -13,11 +13,9 @@ namespace scripts {
     Rectangle tr1(s);
 
     void start() {
-        Window window;
-
-        window.set_size(800, 600);
-        window.set_title("shiiiiii");
-        window.set_background_color(255, 255, 255);
+        Window::set_size(800, 600);
+        Window::set_title("shiiiiii");
+        Window::set_background_color(255, 255, 255);
         tr.set_color({ 255, 0, 0, 0 });
         tr1.set_color({ 0, 255, 0, 0 });
         tr.set_position(-1, 0.5, 0);
@@ -25,6 +23,8 @@ namespace scripts {
     }
 
     void update() {
+        // std::cout << Window::get_FPS() << std::endl;
+
         tr.draw();
         tr1.draw();
     }
