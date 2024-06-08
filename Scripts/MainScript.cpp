@@ -23,7 +23,7 @@ namespace scripts {
     }
 
     void update() {
-        // std::cout << Window::get_FPS() << std::endl;
+        // std::println("{}", Window::get_FPS());
 
         tr.draw();
         tr1.draw();
