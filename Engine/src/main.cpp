@@ -1,49 +1,77 @@
 #include "Engine/Engine.hpp"
+#include "GLFW/glfw3.h"
+
+namespace Time {
+    namespace {
+        double _time;
+        double _deltaTime;
+    } // namespace
+
+    double time() {
+        return _time;
+    }
+
+    double deltaTime() {
+        return _deltaTime;
+    }
+
+    void update() {
+        std::chrono::duration<double> t = std::chrono::system_clock::now().time_since_epoch();
+        _deltaTime = t.count() - _time;
+        _time = t.count();
+    }
+} // namespace Time
 
 int main() {
-    GLFWwindow *window;
-    Window WindowSettings;
-
-    scripts::start();
-
     if (!glfwInit()) {
-        std::cout << "Can't init GLFW!" << std::endl;
+        std::cout << "Couldn't init GLFW!" << std::endl;
         return -1;
     }
 
-    Size ws = WindowSettings.get_size();
-    window = glfwCreateWindow(ws.x, ws.y, WindowSettings.get_title().c_str(), NULL, NULL);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow *window = glfwCreateWindow(Window::get_size().x, Window::get_size().y, Window::get_title().c_str(), NULL, NULL);
     if (!window) {
         glfwTerminate();
-        std::cout << "Can't created window!" << std::endl;
+        std::cout << "Couldn't created window!" << std::endl;
         return -2;
     }
 
     glfwMakeContextCurrent(window);
 
-    if (!gladLoadGL()) {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         glfwTerminate();
-        std::cout << "Can't load GLAD!" << std::endl;
+        std::cout << "Couldn't load GLAD!" << std::endl;
         return -3;
     }
 
 #ifdef DEBUG
+    std::cout << "GLFW " << glfwGetVersionString() << std::endl;
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GPU " << glGetString(GL_RENDERER) << std::endl;
 #endif // NDEBUG
 
-    Color bc = WindowSettings.get_background_color();
-    glClearColor(bc.r / 255.0, bc.g / 255.0, bc.b / 255.0, bc.a);
+    glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height) {
+        glViewport(0, 0, width, height);
+    });
 
-    glScalef(ws.y / ws.x, 1, 1);
+    glViewport(0, 0, Window::get_size().x, Window::get_size().y);
+    glScalef(Window::get_size().y / Window::get_size().x, 1, 1);
+
+    scripts::start();
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(Window::get_background_color().r / 255.0, Window::get_background_color().g / 255.0, Window::get_background_color().b / 255.0, Window::get_background_color().a);
+
+        Time::update();
+        Window::set_FPS(1 / Time::deltaTime());
 
         scripts::update();
 
         glfwSwapBuffers(window);
-
         glfwPollEvents();
     }
 
