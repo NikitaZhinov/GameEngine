@@ -18,7 +18,12 @@ FetchContent_Declare(
     GIT_REPOSITORY "https://github.com/glfw/glfw.git"
     GIT_TAG 3.3.9
 )
-FetchContent_MakeAvailable(GLFW)
+FetchContent_Declare(
+    GLAD
+    GIT_REPOSITORY "https://github.com/Dav1dde/glad.git"
+    GIT_TAG c
+)
+FetchContent_MakeAvailable(GLFW GLAD)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -34,5 +39,6 @@ target_include_directories(GameEngine PUBLIC Engine/include/)
 target_include_directories(GameEngine PUBLIC ${GLFW_SOURCE_DIR}/include)
 target_link_libraries(GameEngine PUBLIC glfw)
 
-add_subdirectory(GLAD)
+add_library(glad STATIC ${glad_SOURCE_DIR}/include/glad/glad.h ${glad_SOURCE_DIR}/src/glad.c)
+target_include_directories(glad PUBLIC ${glad_SOURCE_DIR}/include)
 target_link_libraries(GameEngine PUBLIC glad)
