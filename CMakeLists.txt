@@ -4,8 +4,21 @@ project(GameEngine)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -DDEBUG") # use for develop
-# set(CMAKE_CXX_FLAGS "-O3") # use for release
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -DDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+include(FetchContent)
+FetchContent_Declare(
+    GLFW
+    GIT_REPOSITORY "https://github.com/glfw/glfw.git"
+    GIT_TAG 3.3.9
+)
+FetchContent_MakeAvailable(GLFW)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -17,9 +30,8 @@ file(GLOB ENGINE_SRC Engine/src/*.cpp)
 add_executable(GameEngine ${ENGINE_SRC} ${SCRIPTS_SRC})
 
 target_include_directories(GameEngine PUBLIC Engine/include/)
-target_include_directories(GameEngine PUBLIC Scripts/include/)
 
-add_subdirectory(GLFW)
+target_include_directories(GameEngine PUBLIC ${GLFW_SOURCE_DIR}/include)
 target_link_libraries(GameEngine PUBLIC glfw)
 
 add_subdirectory(GLAD)
