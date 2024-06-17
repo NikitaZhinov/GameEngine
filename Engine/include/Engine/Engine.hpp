@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <chrono>
 #include <glad/glad.h>
-#include <print>
+#include <iostream>
 #include <string>
 
 struct Size {
