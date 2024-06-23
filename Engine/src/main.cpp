@@ -31,6 +31,8 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    scripts::start();
+
     GLFWwindow *window = glfwCreateWindow(Window::get_size().x, Window::get_size().y, Window::get_title().c_str(), NULL, NULL);
     if (!window) {
         glfwTerminate();
@@ -46,7 +48,7 @@ int main() {
         return -3;
     }
 
-#ifdef DEBUG
+#ifndef NDEBUG
     std::println("GLFW {}", glfwGetVersionString());
     std::println("OpenGL {}", (const char *)glGetString(GL_VERSION));
     std::println("GPU {}", (const char *)glGetString(GL_RENDERER));
@@ -58,8 +60,6 @@ int main() {
 
     glViewport(0, 0, Window::get_size().x, Window::get_size().y);
     glScalef(Window::get_size().y / Window::get_size().x, 1, 1);
-
-    scripts::start();
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
