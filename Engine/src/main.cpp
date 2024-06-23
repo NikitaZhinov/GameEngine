@@ -23,7 +23,7 @@ namespace Time {
 
 int main() {
     if (!glfwInit()) {
-        std::cout << "Couldn't init GLFW!" << std::endl;
+        std::println("Couldn't init GLFW!");
         return -1;
     }
 
@@ -34,7 +34,7 @@ int main() {
     GLFWwindow *window = glfwCreateWindow(Window::get_size().x, Window::get_size().y, Window::get_title().c_str(), NULL, NULL);
     if (!window) {
         glfwTerminate();
-        std::cout << "Couldn't created window!" << std::endl;
+        std::println("Couldn't created window!");
         return -2;
     }
 
@@ -42,14 +42,14 @@ int main() {
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         glfwTerminate();
-        std::cout << "Couldn't load GLAD!" << std::endl;
+        std::println("Couldn't load GLAD!");
         return -3;
     }
 
 #ifdef DEBUG
-    std::cout << "GLFW " << glfwGetVersionString() << std::endl;
-    std::cout << "OpenGL " << (const char *)glGetString(GL_VERSION) << std::endl;
-    std::cout << "GPU " << (const char *)glGetString(GL_RENDERER) << std::endl;
+    std::println("GLFW {}", glfwGetVersionString());
+    std::println("OpenGL {}", (const char *)glGetString(GL_VERSION));
+    std::println("GPU {}", (const char *)glGetString(GL_RENDERER));
 #endif // NDEBUG
 
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height) {
